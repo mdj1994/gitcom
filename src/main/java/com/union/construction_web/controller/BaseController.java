@@ -65,6 +65,7 @@ public class BaseController {
                 //읽어온 DATA를 JSON Objcet 형식으로 변환
                 jsonObj = (JSONObject) jsonParser.parse(br);
             }else {
+                log.error("API 연결 안 됨. CODE : "+responseCode);
             }
 
 
@@ -125,6 +126,7 @@ public class BaseController {
                 //읽어온 DATA를 JSON Objcet 형식으로 변환
                 jsonObj = (JSONObject) jsonParser.parse(br);
             }else {
+                log.error("API 연결 안 됨. CODE : "+responseCode);
             }
 
 

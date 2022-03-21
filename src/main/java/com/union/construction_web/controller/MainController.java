@@ -34,4 +34,31 @@ public class MainController extends BaseController {
         }
 
     }
+
+
+    @GetMapping("/testPage")
+    public String testPage01() {
+
+        try {
+
+        }
+        catch (Exception e) {
+
+        }
+
+        return "test/test01";
+    }
+
+    @GetMapping("/hre")
+    public String testPageo2() {
+
+        try {
+            System.out.println("test");
+        }
+        catch (Exception e) {
+
+        }
+
+        return "test/test02";
+    }
 }
