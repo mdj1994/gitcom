@@ -3,12 +3,16 @@ package com.union.construction_web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.union.construction_web.domain.TestBean;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController extends BaseController {
+
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -49,16 +53,16 @@ public class MainController extends BaseController {
         return "test/test01";
     }
 
-    @GetMapping("/hre")
-    public String testPageo2() {
+    @GetMapping("/login.do")
+    public String login() {
 
         try {
-            System.out.println("test");
+            log.info("======== /login.do");
         }
         catch (Exception e) {
 
         }
 
-        return "test/test02";
+        return "login";
     }
 }
