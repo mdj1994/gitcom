@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/noMenu}">
+  <th:block layout:fragment="contentFragment">
+    <div id="body_container">
+      <div class="body_inner">
+          <div class="subHeader">
+            <h3 class="subTitle">회원가입</h3>
+            <a href="#" class="btn_back">이전</a>
+          </div>
+          <div class="join_wrap">
+            <h4 class="subTitle02">개인정보 입력</h4>
+            <p class="txt_info">
+                회원 가입을 위해 회원사 확인 절차가 필요합니다.<br>
+                이름(실명)과 휴대폰 번호를 입력하세요.
+            </p>
+            <div class="joinForm">
+                <div class="nameArea">
+                    <label for="name">이름</label>
+                    <div class="box">
+                      <input type="text" id="name" placeholder="반드시 실명으로 입력하세요." />
+                    </div>
+                </div>
+                <div class="phoneArea">
+                    <label for="phoneNo">휴대번호</label>
+                    <div class="box">
+                      <select class="" id="firstNo">
+                          <option>선택</option>
+                      </select>
+                      <input type="tel" placeholder="- 없이 입력하세요" id="phoneNo" />
+                    </div>
+                </div>
+            </div>
+            <div class="btn_center"><button class="btn_joinCheck" id="button_active">회원조회</button></div>
+          </div>
+      </div>
+    </div>
+
+    <!-- s: popup -->
+    <div class="popup_wrap" style="display:none;" id="popup_div">
+        <div class="msgPopup_wrap">
+          <h2 class="pHeader">알림</h2>
+          <div class="pBody">
+            <p class="msg01">정보가 존재하지 않습니다.<br>확인 후, 다시 시도해주세요.</p>
+            <button type="button" class="btn_type01" id="retry">다시시도</button>
+          </div> 
+        </div>
+      </div>
+      <!-- e: popup -->
+
+    <script layout:fragment="javascript">
+
+        <!-- 회원 조회 클릭 -->
+        $('#button_active').click(function() {
+
+            //유효성 검사
+            if($('#name').val() === '') {
+                $('#popup_div').css('display','flex');
+            }
+
+            //유효성 검사 완료
+
+        });
+
+        <!-- popup창 다시시도 클릭 -->
+        $('#retry').click(function() {
+            $('#popup_div').css('display','none');
+        })
+    </script>
+</th:block>
+</html>

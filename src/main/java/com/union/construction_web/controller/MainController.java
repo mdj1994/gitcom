@@ -65,4 +65,22 @@ public class MainController extends BaseController {
 
         return "login";
     }
+
+    @GetMapping("/main.do")
+    public String Main() {
+
+        return "main/main";
+    }
+
+    @GetMapping("/layout")
+    public String test_Layout() {
+
+        return "layout/noMenu";
+    }
+
+    @GetMapping("/layout_test")
+    public String test_Layout02() {
+
+        return "member/content2";
+    }
 }
