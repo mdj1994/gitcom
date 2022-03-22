@@ -38,13 +38,4 @@ public class OptionController extends BaseController {
         return "option/option_detail";
     }
 
-    /**
-     * 신문고 글쓰기
-     * @return
-     */
-    @GetMapping("/option/option_write.do")
-    public String option_write() {
-
-        return "option/option_write";
-    }
 }
