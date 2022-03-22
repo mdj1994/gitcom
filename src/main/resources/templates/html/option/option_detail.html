@@ -40,9 +40,10 @@
       </div>
     </div>
 
+  <!-- popup창 생성시, 배경 검정색으로 만들기 -->
+  <div class="dimmed" style="display:none"></div>
   <!-- s: popup 투표하기 -->
-  <div class="dimmed" id="popup_active" style="display:none"></div>
-  <div class="pollPopup_wrap">
+  <div class="pollPopup_wrap" id="popup_active" style="display:none">
     <div class="pollPopup_inner">
       <h2 class="pHeader">투표하기</h2>
       <div class="pBody">
@@ -63,8 +64,8 @@
             <textarea rows="10" cols="50" placeholder="30자이내로 작성해주세요."></textarea>
           </div>
           <div class="btn_wrap">
-            <a href="#" class="btn_cancel">취소</a>
-            <a href="#" class="btn_done">완료</a>
+            <a href="#" class="btn_cancel" id="item_cance">취소</a>
+            <a href="#" class="btn_done" id="item_submit">완료</a>
           </div>
         </div>
       </div>
@@ -73,8 +74,8 @@
   <!-- e: popup -->
 
   <!-- s: popup 투표 결과-->
-  <div class="dimmed" id="popup_result" style="display:none"></div>
-  <div class="pollPopup_wrap">
+  <!--<div class="dimmed"></div> -->
+  <div class="pollPopup_wrap" id="popup_result" style="display:none">
     <div class="pollPopup_inner">
       <h2 class="pHeader">투표결과</h2>
       <div class="pBody">
@@ -91,7 +92,7 @@
             <li><span class="txt">찬성</span><span class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
           </ul>
           <div class="btn_wrap">
-            <a href="#" class="btn_cancel">확인</a>
+            <a href="#" class="btn_cancel" id="item_result">확인</a>
           </div>
         </div>
       </div>
@@ -105,11 +106,31 @@
   <!-- 투표하기 버튼 클릭 -->
   $('#button_active').click(function() {
     $('#popup_active').css('display', 'flex');
+    $('.dimmed').show();
   });
 
   <!-- 투표결과 버튼 클릭 -->
   $('#button_result').click(function() {
-    $('#popup_result').css('display', 'flex');
+    $('#popup_result').show();
+    $('.dimmed').show();
+  });
+
+
+  <!-- 투표하기 popup창 완료 버튼 -->
+  $('#item_submit').click(function() {
+    $('#popup_active').hide();
+    $('.dimmed').hide();
+  });
+
+  $('#item_cance').click(function() {
+    $('#popup_active').hide();
+    $('.dimmed').hide();
+  })
+
+  <!-- 투표결과 popup창 확인 버튼 -->
+  $('#item_result').click(function() {
+    $('#popup_result').hide();
+    $('.dimmed').hide();
   })
 
 </script>
