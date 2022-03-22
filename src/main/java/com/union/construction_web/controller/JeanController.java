@@ -30,6 +30,13 @@ public class JeanController extends BaseController {
         return "jean/jean_list";
     }
 
+    @GetMapping("/jean/jean_detail.do")
+    public String jean_detail() {
+
+        System.out.println("안 만들어졌니");
+        return "jean/jean_detail";
+    }
+
 
     /**
      * 공개제안 글쓰기
