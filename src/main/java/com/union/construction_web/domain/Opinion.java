@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Opinion {
     
-    /* 게시판 옵션? */
+    /* 의견 게시판 */
     private long opinion_no;            //의견번호
     private String title;               //의견게시판 제목
     private String contents;            //의견게시판 내용
