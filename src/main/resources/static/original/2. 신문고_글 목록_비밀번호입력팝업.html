@@ -1,8 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default_layout}">
-<th:block layout:fragment="contentFragment">
+<html lang="ko">
+  <head>
+    <title>KOSCA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link href="../css/default.css" rel="stylesheet" type="text/css"> 
+    <script src="../js/jquery.3.6.0.min.js"></script>
+    <script src="../js/ui.js"></script>
+  </head>
+  <body>
+    <header id="header_container">
+      <div class="inner">
+        <div class="header_top">
+          <h1><a href="#">대한전문건설협회</a></h1>
+          <div class="rtl">
+            <span class="txt_account"><span>반갑습니다.</span><strong>경기북부 홍길동</strong>님</span>
+            <a href="#" class="btn_alarm new">알림<span>9</span></a>
+            <a href="#" class="btn_out"><span>로그아웃</span></a>
+          </div>
+        </div>
+        <div class="header_btm">
+          <h2 class="mainTitle">회원 신문고</h2>
+          <nav class="gnb">
+            <ul>
+              <li class="gnb01 on"><a href="#">신문고</a></li>
+              <li class="gnb02"><a href="#">공개제안</a></li>
+              <li class="gnb03"><a href="#">의견청취</a></li>
+              <li class="gnb04"><a href="#">공지사항</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
     <div id="body_container">
       <div class="body_inner">
        <div class="subHeader m">
@@ -25,111 +54,111 @@
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
-                <th scope="col">답글</th>
+                <th scope="col">처리상태</th>
                 <th scope="col">추천</th>
               </tr>
             </thead>
             <tbody>
-              <tr onclick="detail_move('1')">
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">5</td>
+                <td class="state"><span class="wait">대기</span></td>
                 <td class="rcd"><span>9,999</span></td>
               </tr>
-              <tr onclick="detail_move('1')">
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> </td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">11</td>
+                <td class="state"><span class="done">완료</span></td>
                 <td class="rcd"><span>9,999</span></td>
-              </tr>
-              <tr onclick="detail_move('1')">
+              </tr> 
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">14</td>
+                <td class="state"><span class="wait">대기</span></td>
                 <td class="rcd"><span>9,999</span></td>
               </tr>
-              <tr onclick="detail_move('1')">
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> </td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">12</td>
+                <td class="state"><span class="done">완료</span></td>
                 <td class="rcd"><span>9,999</span></td>
-              </tr>
-              <tr onclick="detail_move('1')">
+              </tr> 
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">55</td>
+                <td class="state"><span class="wait">대기</span></td>
                 <td class="rcd"><span>9,999</span></td>
               </tr>
-              <tr onclick="detail_move('1')">
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> </td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">24</td>
+                <td class="state"><span class="done">완료</span></td>
                 <td class="rcd"><span>9,999</span></td>
-              </tr>
-              <tr onclick="detail_move('1')">
+              </tr> 
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">12</td>
+                <td class="state"><span class="wait">대기</span></td>
                 <td class="rcd"><span>9,999</span></td>
               </tr>
-              <tr onclick="detail_move('1')">
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> </td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">21</td>
+                <td class="state"><span class="done">완료</span></td>
                 <td class="rcd"><span>9,999</span></td>
-              </tr>
-              <tr onclick="detail_move('1')">
+              </tr> 
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">30</td>
+                <td class="state"><span class="wait">대기</span></td>
                 <td class="rcd"><span>9,999</span></td>
               </tr>
-              <tr onclick="detail_move('1')">
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> </td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">28</td>
+                <td class="state"><span class="done">완료</span></td>
                 <td class="rcd"><span>9,999</span></td>
-              </tr>
-              <tr onclick="detail_move('1')">
+              </tr> 
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">39</td>
+                <td class="state"><span class="wait">대기</span></td>
                 <td class="rcd"><span>9,999</span></td>
               </tr>
-              <tr onclick="detail_move('1')">
+              <tr>
                 <td class="no" scope="row">999</td>
                 <td class="title"><a href="#">2022년도 건설업건설업건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> </td>
                 <td class="writer">홍길동 (경기지부 | KICT)</td>
                 <td class="date">2022-02-03</td>
-                <td class="state">38</td>
+                <td class="state"><span class="done">완료</span></td>
                 <td class="rcd"><span>9,999</span></td>
               </tr> 
             </tbody>
           </table>
           <div class="pagingNbtn">
-            <div class="btn_write"><a th:href="@{/jean/jean_write.do}"><span>글쓰기</span></a></div>
+            <div class="btn_write"><a href="#"><span>글쓰기</span></a></div>
             <div class="paging">
               <a href="#" class="front"></a>
               <a href="#" class="prev"></a>
@@ -145,13 +174,33 @@
         </div>
       </div>
     </div>
-</th:block>
-<script layout:fragment="javascript" th:inline="javascript">
+    <footer id="footer_container">
+      <div class="inner">
+        <address>
+          <strong>대한전문건설협회</strong>
+          <div>07071 서울특별시 동작구 보라매로5길 15, 18층 <br>(신대방동, 전문건설회관)</div>
+          <div>개인정보처리담당자  홍길동 </div>
+          <div>TEL 02.3284.1010  |  FAX 02.3284.1044<div>
+          <div>webmaster@kosca.or.kr</div>
+        </address>
+        <div class="link"><a href="#">서비스이용약관</a><a href="#">개인정보처리방침</a><a href="#">사이트맵</a></div>
+        <div class="cp">Copyright © 2022 KOSCA All right reserved.</div>
+      </div>
+    </footer> 
 
-  <!-- detail 이동 -->
-  function detail_move(num) {
-    location.href=[[@{/jean/jean_detail.do}]];
-  }
-
-</script>
+    <!-- s: pwd -->
+    <div class="popup_wrap">
+      <div class="msgPopup_wrap">
+        <h2 class="pHeader">알림</h2>
+        <div class="pBody">
+          <div class="pwdEntry">
+            <p>비밀번호를 입력해주세요.</p>
+            <input type="text" class="entry" />
+          </div>
+          <button type="button" class="btn_type01">확인</button>
+        </div> 
+      </div>
+    </div>
+    <!-- e: pwd -->
+  </body>
 </html>

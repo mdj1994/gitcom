@@ -17,10 +17,10 @@
         <div class="userid"><input type="text" placeholder="아이디 (휴대폰번호)  - 없이 입력" /></div>
         <div class="userpwd"><input type="password" placeholder="Passwords" /></div>
         <div class="btn_account">
-          <a href="#" class="btn01">회원가입하기</a>
+          <a th:href="@{/member/membership01.do}" class="btn01">회원가입하기</a>
           <a href="#" class="btn02">비밀번호 재설정</a>
         </div>
-        <button class="btn_login">로그인</button>
+        <button class="btn_login" id="login_check">로그인</button>
         <address class="txt_address">
           <div><strong>대한전문건설협회</strong>07071 서울특별시 동작구 보라매로5길 15, 18층 <br>TEL. 02.3284.1010  FAX. 02.3284.1044<br>webmaster@kosca.or.kr</div>
           <span class="cp">Copyright © 2022 KOSCA All right reserved.</span>
@@ -40,7 +40,7 @@
       </div>
     </div>
     <!-- e: popup -->
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
 
       $(".userid input").focus(function(){
         $(this).parent().addClass("on");
@@ -56,6 +56,13 @@
       $('#popup_check').click(function() {
         $('.popup_wrap').css('display', 'none');
       });
+
+
+      //login 클릭
+      $('#login_check').click(function() {
+        location.href=[[@{/main/main.do}]];
+      });
+
     </script>
   </body>
 </html>

@@ -33,9 +33,16 @@
                     </div>
                 </div>
             </div>
-            <div class="btn_center"><button class="btn_certify">인증하기</button></div>
+            <div class="btn_center"><button class="btn_certify" id="result_check">인증하기</button></div>
           </div>
       </div>
     </div>
   </th:block>
+    <script layout:fragment="javascript" th:inline="javascript">
+
+        //인증하기 클릭
+        $('#result_check').click(function() {
+            location.href=[[@{/member/membership03.do}]];
+        })
+    </script>
 </html>

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class JeanController extends BaseController {
+public class AnnouncementController extends BaseController {
 
     Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -23,28 +23,17 @@ public class JeanController extends BaseController {
      * 공개제안 글 목록
      * @return
      */
-    @GetMapping("/jean/jean_list.do")
-    public String jean_list() {
+    @GetMapping("/announcement/announcement_list.do")
+    public String announcement_list() {
 
 
-        return "jean/jean_list";
+        return "announcement/announcement_list";
     }
 
-    @GetMapping("/jean/jean_detail.do")
-    public String jean_detail() {
+    @GetMapping("/announcement/announcement_detail.do")
+    public String announcement_detail() {
 
-        return "jean/jean_detail";
-    }
-
-
-    /**
-     * 공개제안 글쓰기
-     * @return
-     */
-    @GetMapping("/jean/jean_write.do")
-    public String jean_write() {
-
-        return "jean/jean_write";
+        return "announcement/announcement_detail";
     }
 
 

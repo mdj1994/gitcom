@@ -72,6 +72,9 @@
   #header_container .gnb li.gnb04 {background:url("../images/pc/gnb_04_off.png") 0 0 no-repeat;}
   #header_container .gnb li.gnb04.on {background:url("../images/pc/gnb_04_on.png") 0 0 no-repeat;}
 
+  body.intro {background-color:#fff;text-align:center;height: 100vh;display: flex;justify-content: center;align-items: center;}
+  body.intro .cp {position:absolute;left:0;bottom:35px;width:100%;text-align:center;font-size:13px;color:#949699;}
+
   .login_body {background:#fff url("../images/pc/bg_login_01.jpg") center 0 / cover no-repeat;}
   .login_wrap {width:1156px;height:800px;background:#fff url("../images/pc/bg_login_02.png") right 0 / 57.61245674740484% auto no-repeat;border-radius: 12px;overflow:hidden;position:absolute;left:50%;top:50%; margin:-400px 0 0 -578px;-webkit-box-shadow: 0 0px 40px 5px rgba(0,0,0,0.14); box-shadow: 0 0px 40px 5px rgba(0,0,0,0.14);}
   .login_wrap .loginForm {width:370px;padding:0 60px;}
@@ -245,6 +248,10 @@
   .main_inner .tbl_listWrap .tbl_type tr .title a {color:#404040;text-decoration:none;}
 
   
+  .pwdEntry {text-align:center;font-size:16px;line-height:2;color:#333333;padding:45px;}
+  .pwdEntry p {padding-bottom:15px;}
+  .pwdEntry .entry {width: 100%; line-height: 41px; margin: 0 8px;  padding: 0 0 0 14px; vertical-align: 1px; border: 1px solid #d7d8dc; border-radius: 4px; font-size: 14px;box-sizing: border-box;}
+
   /* 신문고_글쓰기 */
   .sub01_tblList {}
   .sub01_tblList table {width: 100%; margin: 0 0 25px; border-bottom: 1px solid #ebebeb; font-size: 13px; font-family: "Roboto";}

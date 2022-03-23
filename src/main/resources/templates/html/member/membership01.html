@@ -27,6 +27,7 @@
                     <div class="box">
                       <select class="" id="firstNo">
                           <option>선택</option>
+                          <option>010</option>
                       </select>
                       <input type="tel" placeholder="- 없이 입력하세요" id="phoneNo" />
                     </div>
@@ -49,7 +50,7 @@
       </div>
       <!-- e: popup -->
 
-    <script layout:fragment="javascript">
+    <script layout:fragment="javascript" th:inline="javascript">
 
         <!-- 회원 조회 클릭 -->
         $('#button_active').click(function() {
@@ -57,6 +58,27 @@
             //유효성 검사
             if($('#name').val() === '') {
                 $('#popup_div').css('display','flex');
+            } else {
+
+                var pattern_num = /^[0-9]*$/;
+
+                //조회하기
+                let phoneNo = $('#phoneNo').val();  //전화번호 가져오기
+
+                phoneNo = phoneNo.replace(/-/g, '');    // 전화번호 사이 '-'입력시 삭제
+                if(!pattern_num.test(phoneNo)) {
+
+                    alert('숫자만 입력해주세요.');
+                    $('#phoneNo').focus();
+
+                    return;
+                }
+                const APIURL = [[${@environment.getProperty('API_SERVER.key')}]];   //properties에 저장 된 API URL 불러오기
+                const URL = 'APIURL/member/phonecheck'
+
+
+
+                location.href=[[@{/member/membership02.do}]];
             }
 
             //유효성 검사 완료
