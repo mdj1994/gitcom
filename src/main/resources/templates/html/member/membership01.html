@@ -74,7 +74,25 @@
                     return;
                 }
                 const APIURL = [[${@environment.getProperty('API_SERVER.key')}]];   //properties에 저장 된 API URL 불러오기
-                const URL = 'APIURL/member/phonecheck'
+                const URL = APIURL+'/user/member/membership01findByPhone.ajax';
+
+                var data = new FormData;
+                data.append('mobile_no', phoneNo);
+
+                console.log(URL);
+                $.ajax({
+                    url : URL,
+                    data : data,
+                    type: 'post',
+                    dataType : 'json',
+                    contentType : false,
+                    processData : false,
+                    success : function(data) {
+                        console.log(data);
+                    }
+                });
+
+                return;
 
 
 
