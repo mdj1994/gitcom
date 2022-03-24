@@ -14,7 +14,7 @@
         <h1><span>KOSCA</span></h1>
         <h2>Log into your<br/>Account</h2>
         <p class="txt01">회원신문고는 회원사가 이용하는 서비스입니다.<br>회원사가 아닐시 사용이 제한됩니다.</p>
-        <div class="userid"><input type="text" placeholder="아이디 (휴대폰번호)  - 없이 입력" /></div>
+        <div class="userid"><input type="text" placeholder="아이디 (사업자번호)  - 없이 입력" /></div>
         <div class="userpwd"><input type="password" placeholder="Passwords" /></div>
         <div class="btn_account">
           <a th:href="@{/member/membership01.do}" class="btn01">회원가입하기</a>
@@ -29,8 +29,9 @@
     </div>
 
 
+    <!-- 로그인 정보가 없을 경우 -->
     <!-- s: popup -->
-    <div class="popup_wrap">
+    <div class="popup_wrap" style="display:none;" id="popup_false">
       <div class="msgPopup_wrap">
         <h2 class="pHeader">알림</h2>
         <div class="pBody">
