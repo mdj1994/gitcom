@@ -67,18 +67,25 @@
     <script layout:fragment="javascript" th:inline="javascript">
 
         let snsCheck = 'n';
+        let phoneNo = [[${mobile_no}]];  //전화번호 정보 가져오기
+        let user_nm = [[${user_nm}]];   //사용자 정보 가져오기
+        let randomNum = '';             //인증번호 발송 누를 시, 인증번호가 생성된다.
+
         //$('#result_check').attr('disabled', true);  //시작시 인증하기 버튼 disabled 처리
 
         //인증번호 발송
         $('#btn_snsSend').click(function() {
             //$('#result_check').removeAttr('disabled');  //인증하기 버튼 disabled 처리 해제
 
-            let phoneNo = [[${mobile_no}]];  //전화번호 정보 가져오기
-            let user_nm = [[${user_nm}]];   //사용자 정보 가져오기
+
+            /* 랜덤 숫자 만들기*/
+            randomNum = Math.floor((Math.random()*900000)+100000);
+
 
             let data = new FormData();
             data.append("mobile_no", phoneNo);
             data.append("member_nm", user_nm);
+            data.append("certifyNo", randomNum);
 
             const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
             const URL = APIURL+'/user/member/snsSend.ajax';
@@ -93,6 +100,7 @@
                 success : function(data) {
                     if(data.RST_CD == 0) {
                         snsCheck = 'y'; //인증번호 발송 클릭
+                        console.log(data);
                     } else {
                         $('#popup_div').show();
                     }
@@ -107,39 +115,25 @@
         //인증하기 클릭
         $('#result_check').click(function() {
 
-            let phoneNo = [[${mobile_no}]];  //전화번호 정보 가져오기
-            let user_nm = [[${user_nm}]];   //사용자 정보 가져오기
+            let certifyNo = $('#certifyNo').val();
 
             //인증번호 발송 클릭 안 했을 경우
             if(snsCheck != 'y') {
                 $('#popup_sns').show();
-                return;}
+                return;
+            }
 
-            let certifyNo = $('#certifyNo').val();
+            //인증번호 일치여부 확인
+            else if(!(certifyNo == randomNum)) {
+                $('#popup_div').show();
+                return;
+            }
 
-            const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+
+            //다음페이지 이동
             const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
-            const URL = APIURL+'/user/member/snsResult.ajax';
+            location.href=WEBURL+'/member/membership03.do?mobile_no='+phoneNo+'&member_nm='+user_nm;
 
-            $.ajax({
-                url : URL,
-                data : {certifyNo : certifyNo},
-                type : 'post',
-                dataType : 'json',
-                success : function(data) {
-                    console.log(data);
-                    if(data.RST_CD == 0) {
-
-                        location.href=WEBURL+'/member/membership03.do?mobile_no='+phoneNo+'&member_nm='+user_nm;
-                    } else {
-                        $('#popup_div').show();
-                    }
-                },
-                error : function(request, status, error) {
-                    $('#popup_div').show();
-                    console.log("code : "+request.status+"\nmessage : "+request.responseText+"\nerror : "+error);
-                }
-            });
 
         });
 
