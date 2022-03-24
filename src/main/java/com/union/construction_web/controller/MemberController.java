@@ -24,7 +24,7 @@ public class MemberController extends BaseController {
 
 
     /**
-     * 회원가입
+     * 회원가입(id, 핸드폰번호 받기)
      * @return
      */
     @GetMapping("/member/membership01.do")
@@ -34,7 +34,7 @@ public class MemberController extends BaseController {
     }
 
     /**
-     * 회원가입2
+     * 회원가입2(인증번호 입력받기)
      * @return
      */
     @GetMapping("/member/membership02.do")
@@ -53,7 +53,7 @@ public class MemberController extends BaseController {
     }
 
     /**
-     * 회원가입2
+     * 회원가입2(비밀번호 받기)
      * @return
      */
     @GetMapping("/member/membership03.do")

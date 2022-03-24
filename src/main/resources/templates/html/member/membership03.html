@@ -16,7 +16,7 @@
               <div class="idOrphone">
                 <label for="idNo">회원ID<br>(휴대폰번호)</label>
                 <div class="box">
-                  <input type="text" id="idNo" placeholder="010-1234-5678" disabled th:value="${mobile_no}"/>
+                  <input type="text" id="idNo" placeholder="010-1234-5678" disabled th:value="${result.getMobile_no()}"/>
                 </div>
               </div>
               <div class="inputPassword">
@@ -102,12 +102,14 @@
   //회원가입하기
   function joinAction(pwd) {
 
-      let mobile_no = [[${mobile_no}]];
-      let member_nm = [[${member_nm}]];
+      let member_id = [[${result.getMember_id()}]];
+      let mobile_no = [[${result.getMobile_no()}]];
+      let member_nm = [[${result.getMember_nm()}]];
 
       let data = new FormData();
       data.append('mobile_no', mobile_no);
       data.append('member_nm', member_nm);
+      data.append('member_id', member_id);
       data.append('passwd', pwd);
 
       const APIURL = [[${@environment.getProperty('API_SERVER')}]];
