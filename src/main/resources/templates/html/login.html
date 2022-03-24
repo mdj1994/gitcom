@@ -69,10 +69,13 @@
         let data = new FormData();
         data.append("member_id", userid);
         data.append("passwd", userpwd);
-        data.append("type_os", userOS);
+        data.append("os_type", userOS);
 
-        const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
-        const URL = APIURL+'/user/member/login.ajax';
+        //const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+        //const URL = APIURL+'/user/member/loginAction.ajax';
+
+        const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+        const URL = WEBURL+'/member/loginAction.do';
 
         $.ajax({
           url : URL,
@@ -83,11 +86,12 @@
           processData : false,
           success : function(data) {
             console.log(data);
-            if(data.RST_CD == 0) {
-              console.log();
+            if(data == 0) {
+              alert('oh!');
+
             }
             //data 없음
-            else if(data.RST_CD == '-2') {
+            else if(data == '-2') {
               $('#popup_false').show();
             }
             //기타 error
@@ -101,6 +105,25 @@
         });
       });
 
+
+      function LoginAction(data) {
+
+
+        const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+        const URL = WEBURL+'/member/loginAction.do';
+
+        let getData = data.stringify(data);
+
+        $.ajax({
+          url: URL,
+          data: {data : getData},
+          type: 'post',
+          dataType: 'json',
+          success: function (data) {
+
+          }
+        });
+      }
 
 
 

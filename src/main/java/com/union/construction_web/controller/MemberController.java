@@ -2,6 +2,8 @@ package com.union.construction_web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.union.construction_web.domain.Member;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +11,13 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @PropertySource("classpath:message/properties.properties")
@@ -21,6 +29,38 @@ public class MemberController extends BaseController {
 
     @Value("${API_SERVER}")
     private String API_SERVER;
+
+
+
+    @PostMapping("/member/loginAction.do")
+    @ResponseBody
+    public String loginAction(Member member, HttpServletRequest request) {
+
+        JSONObject jsonObject = new JSONObject();
+        String result = "-1";
+
+        try {
+
+            String jsonString = objectMapper.writeValueAsString(member);
+            //API 호출로 값 가져오기
+            jsonObject = sendPost(API_SERVER + "/user/member/loginAction.ajax", jsonString);
+
+            System.out.println(jsonObject);
+            if(jsonObject.get("RST_CD").toString().equals("0")) {
+
+                HttpSession session = request.getSession();
+                System.out.println(member.getMember_id());
+                session.setAttribute("member", member);
+
+                System.out.println(session.getAttribute("member"));
+            }
+        }
+        catch(Exception e) {
+
+        }
+
+        return jsonObject.get("RST_CD").toString();
+    }
 
 
     /**
