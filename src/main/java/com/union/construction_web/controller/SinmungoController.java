@@ -15,9 +15,6 @@ public class SinmungoController extends BaseController {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @Value("${API_SERVER.key}")
-    private String API_SERVER;
-
 
     /**
      * 신문고 리스트

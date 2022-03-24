@@ -80,7 +80,7 @@
             data.append("mobile_no", phoneNo);
             data.append("member_nm", user_nm);
 
-            const APIURL = [[${@environment.getProperty('API_SERVER.key')}]];   //properties에 저장 된 API URL 불러오기
+            const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
             const URL = APIURL+'/user/member/snsSend.ajax';
 
             $.ajax({

@@ -5,19 +5,21 @@ import com.union.construction_web.domain.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@PropertySource("classpath:message/properties.properties")
 public class MemberController extends BaseController {
 
     Logger log = LoggerFactory.getLogger(this.getClass());
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @Value("${API_SERVER.key}")
+    @Value("${API_SERVER}")
     private String API_SERVER;
 
 

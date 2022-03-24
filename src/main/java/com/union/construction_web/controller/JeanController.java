@@ -14,11 +14,7 @@ public class JeanController extends BaseController {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @Value("${API_SERVER.key}")
-    private String API_SERVER;
 
-    
-    
     /**
      * 공개제안 글 목록
      * @return
