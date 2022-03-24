@@ -30,8 +30,6 @@ public class MainController extends BaseController {
     @GetMapping("/")
     public String default_html() {
 
-        log.info("/test");
-
         return "main/main";
     }
 
