@@ -64,6 +64,7 @@ public class MemberController extends BaseController {
             log.info("member_id : "+member.getMember_id());
             log.info("name : "+member.getMember_nm());
             log.info("mobile no : "+member.getMobile_no());
+            log.info("eclipse");;
 
             model.addAttribute("result", member);
 
