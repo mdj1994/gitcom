@@ -63,9 +63,11 @@
                 var pattern_num = /^[0-9]*$/;
 
                 //조회하기
+                let member_id = '1234';                     //test를 위한 회원번호
                 let usernm = $('#name').val();
-                let firstNo = $('#firstNo').val();  //select box 번호 가져오기
+                let firstNo = $('#firstNo').val();          //select box 번호 가져오기
                 let phoneNo = firstNo+$('#phoneNo').val();  //사용자 입력번호 가져오기
+
 
                 phoneNo.replace(/-/g, '');    // 전화번호 사이 '-'입력시 삭제
                 if(!pattern_num.test(phoneNo)) {
@@ -79,6 +81,7 @@
                 const URL = APIURL+'/user/member/membership01findByPhone.ajax';
 
                 var data = new FormData;
+                data.append('member_id', member_id);
                 data.append('mobile_no', phoneNo);
                 data.append("member_nm", usernm);
 
@@ -95,7 +98,7 @@
                         //성공적으로 완료 되었을 경우
                         if(data.RST_CD == 0) {
                             if(data.result == 'Y') {
-                                location.href='/member/membership02.do?mobile_no='+phoneNo+'&user_nm='+usernm;   //
+                                location.href='/member/membership02.do?mobile_no='+phoneNo+'&member_nm='+usernm+'&member_id='+member_id;   //
                             } else {
                                 $('#popup_div').css('display','flex');  //pop창 생성
                             }

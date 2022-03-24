@@ -17,13 +17,13 @@
                 <div class="nameArea">
                     <label for="name">회원명</label>
                     <div class="box">
-                      <input type="text" id="name" placeholder="홍길동" disabled th:value="${user_nm}"/>
+                      <input type="text" id="name" placeholder="홍길동" disabled th:value="${result.getMember_nm()}"/>
                     </div>
                 </div>
                 <div class="phoneArea">
                     <label for="phoneNo">휴대번호</label>
                     <div class="box">
-                      <input type="tel" id="phoneNo" placeholder="010-1234-5678" disabled th:value="${mobile_no}"/>
+                      <input type="tel" id="phoneNo" placeholder="010-1234-5678" disabled th:value="${result.getMobile_no()}"/>
                       <button class="btn_sendNo" id="btn_snsSend">인증번호발송</button>
                     </div>
                 </div>
@@ -67,8 +67,9 @@
     <script layout:fragment="javascript" th:inline="javascript">
 
         let snsCheck = 'n';
-        let phoneNo = [[${mobile_no}]];  //전화번호 정보 가져오기
-        let user_nm = [[${user_nm}]];   //사용자 정보 가져오기
+        let member_id = [[${result.getMember_id()}]];   // 사용자 id 가져오기
+        let phoneNo = [[${result.getMobile_no()}]];  //전화번호 정보 가져오기
+        let user_nm = [[${result.getMember_nm()}]];   //사용자 정보 가져오기
         let randomNum = '';             //인증번호 발송 누를 시, 인증번호가 생성된다.
 
         //$('#result_check').attr('disabled', true);  //시작시 인증하기 버튼 disabled 처리
@@ -132,7 +133,7 @@
 
             //다음페이지 이동
             const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
-            location.href=WEBURL+'/member/membership03.do?mobile_no='+phoneNo+'&member_nm='+user_nm;
+            location.href=WEBURL+'/member/membership03.do?mobile_no='+phoneNo+'&member_nm='+user_nm+'&member_id='+member_id;
 
 
         });

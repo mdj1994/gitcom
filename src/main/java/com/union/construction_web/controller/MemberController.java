@@ -38,13 +38,11 @@ public class MemberController extends BaseController {
      * @return
      */
     @GetMapping("/member/membership02.do")
-    public String membership02(@RequestParam(value="mobile_no") String mobile_no,
-                               @RequestParam(value="user_nm") String user_nm, Model model) {
+    public String membership02(Member member, Model model) {
 
         try {
 
-            model.addAttribute("mobile_no", mobile_no);
-            model.addAttribute("user_nm", user_nm);
+            model.addAttribute("result", member);
 
         }
         catch (Exception e) {
@@ -63,12 +61,11 @@ public class MemberController extends BaseController {
 
         try {
 
+            log.info("member_id : "+member.getMember_id());
             log.info("name : "+member.getMember_nm());
             log.info("mobile no : "+member.getMobile_no());
 
-            model.addAttribute("mobile_no", member.getMobile_no());
-            model.addAttribute("member_nm", member.getMember_nm());
-
+            model.addAttribute("result", member);
 
         }
         catch (Exception e) {
