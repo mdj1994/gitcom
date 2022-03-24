@@ -14,8 +14,8 @@
         <h1><span>KOSCA</span></h1>
         <h2>Log into your<br/>Account</h2>
         <p class="txt01">회원신문고는 회원사가 이용하는 서비스입니다.<br>회원사가 아닐시 사용이 제한됩니다.</p>
-        <div class="userid"><input type="text" placeholder="아이디 (사업자번호)  - 없이 입력" /></div>
-        <div class="userpwd"><input type="password" placeholder="Passwords" /></div>
+        <div class="userid"><input type="text" id="userid" placeholder="아이디 (사업자번호)  - 없이 입력" /></div>
+        <div class="userpwd"><input type="password" id="userpwd" placeholder="Passwords" /></div>
         <div class="btn_account">
           <a th:href="@{/member/membership01.do}" class="btn01">회원가입하기</a>
           <a href="#" class="btn02">비밀번호 재설정</a>
@@ -41,15 +41,92 @@
       </div>
     </div>
     <!-- e: popup -->
-    <script type="text/javascript" th:inline="javascript">
 
+
+    <script  th:inline="javascript">
+
+
+      //로그인버튼 클릭
+      $('#login_check').click(function() {
+
+        //조회하기
+        let userid = $('#userid').val();
+        let userpwd = $('#userpwd').val();
+
+        //OS 구분하기
+        let userOS = navigator.userAgent.toLowerCase();
+        if(userOS.indexOf("android") > -1) {
+          userOS = 'A';
+        }
+        else if ( userOS.indexOf("iphone") > -1||userOS.indexOf("ipad") > -1||userOS.indexOf("ipod") > -1 ) {
+          userOS = "I";
+        } else {
+          userOS = "etc";
+        }
+
+
+        //data 넣기
+        let data = new FormData();
+        data.append("member_id", userid);
+        data.append("passwd", userpwd);
+        data.append("type_os", userOS);
+
+        const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+        const URL = APIURL+'/user/member/login.ajax';
+
+        $.ajax({
+          url : URL,
+          data : data,
+          type : 'post',
+          dataType : 'json',
+          contentType : false,
+          processData : false,
+          success : function(data) {
+            console.log(data);
+            if(data.RST_CD == 0) {
+              console.log();
+            }
+            //data 없음
+            else if(data.RST_CD == '-2') {
+              $('#popup_false').show();
+            }
+            //기타 error
+            else {
+              console.log('error');
+            }
+          },
+          error : function(request, status, error) {
+            alert("code : "+request.status+"\nmessage : "+request.responseText+"\nerror : "+error);
+          }
+        });
+      });
+
+
+
+
+      // id부분 마우스 커서시
       $(".userid input").focus(function(){
         $(this).parent().addClass("on");
 
       });
+
+      // id부분 입력 없을 경우
       $(".userid input").blur(function(){
         if($(this).val().length < 1){
-          $(this).parent().removeClass("on"); 
+          $(this).parent().removeClass("on");
+        }
+      });
+
+      // pw부분 마우스 커서시
+      $(".userpwd input").focus(function(){
+        $(this).parent().addClass("on");
+
+      });
+
+      // pw부분 입력 없을 경우
+      $(".userpwd input").blur(function(){
+        if($(this).val().length < 1){
+          $(this).parent().removeClass("on");
         }
       });
 
@@ -58,11 +135,6 @@
         $('.popup_wrap').css('display', 'none');
       });
 
-
-      //login 클릭
-      $('#login_check').click(function() {
-        location.href=[[@{/main/main.do}]];
-      });
 
     </script>
   </body>
