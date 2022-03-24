@@ -38,6 +38,8 @@
       </div>
     </div>
 
+
+      <!-- 건설협회 데이터 확인-->
     <!-- s: popup -->
     <div class="popup_wrap" style="display:none;" id="popup_div">
         <div class="msgPopup_wrap">
@@ -47,6 +49,20 @@
             <button type="button" class="btn_type01" id="retry">다시시도</button>
           </div> 
         </div>
+      </div>
+      <!-- e: popup -->
+
+
+      <!-- 이미 있는 회원 -->
+      <!-- s: popup -->
+      <div class="popup_wrap" style="display:none;" id="popup_over">
+          <div class="msgPopup_wrap">
+              <h2 class="pHeader">알림</h2>
+              <div class="pBody">
+                  <p class="msg01">이미 있는 회원정보 입니다.</p>
+                  <button type="button" class="btn_type01" id="retry02">다시시도</button>
+              </div>
+          </div>
       </div>
       <!-- e: popup -->
 
@@ -99,7 +115,11 @@
                         if(data.RST_CD == 0) {
                             if(data.result == 'Y') {
                                 location.href='/member/membership02.do?mobile_no='+phoneNo+'&member_nm='+usernm+'&member_id='+member_id;   //
-                            } else {
+                            }
+                            else if(data.RST_CD == '-2') {
+                                $('#popup_over').show();
+                            }
+                            else {
                                 $('#popup_div').css('display','flex');  //pop창 생성
                             }
                         }
@@ -112,10 +132,13 @@
 
         }); //회원정보 조회 완료
 
-        <!-- popup창 다시시도 클릭 -->
+        <!-- popup 닫기 01 -->
         $('#retry').click(function() {
             $('#popup_div').css('display','none');
         })
+
+        <!-- popup 닫기 02 -->
+        $('#retry02').click(function() { $('#popup_over').hide();})
     </script>
 </th:block>
 </html>
