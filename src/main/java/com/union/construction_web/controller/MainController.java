@@ -10,6 +10,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @PropertySource("classpath:message/properties.properties")
 public class MainController extends BaseController {
@@ -21,85 +23,59 @@ public class MainController extends BaseController {
     @Value("${API_SERVER}")
     private String API_SERVER;
 
-
-    @GetMapping("/test123")
-    public void test() {
-
-        try {
-            TestBean testBean = new TestBean();
-            testBean.setT_NAME("가나다라");
-
-            System.out.println(testBean.getT_NAME());
-            String jsonString = objectMapper.writeValueAsString(testBean);
-            JSONObject jsonObject = sendPost(API_SERVER+"/test_api", jsonString);
-
-            System.out.println(jsonObject);
-
-        } catch (Exception e) {
-            System.out.println("catch");
-        }
-
-    }
-
-
-    @GetMapping("/testPage")
-    public String testPage01() {
-
-        try {
-
-        }
-        catch (Exception e) {
-
-        }
-
-        return "layout/header";
-    }
-
-    @GetMapping("/main/login.do")
-    public String login() {
-
-        try {
-            log.info("======== /login.do");
-        }
-        catch (Exception e) {
-
-        }
-
-        return "login";
-    }
-
-
+    /**
+     * PC 시작값
+     * @return
+     */
     @GetMapping("/")
     public String default_html() {
 
         log.info("/test");
 
-        return "login";
+        return "main/main";
     }
 
-    @GetMapping("/main/main.do")
-    public String Main() {
 
-        log.info("main.do");
+    /**
+     * logout
+     * @param request
+     * @return
+     */
+    @GetMapping("/main/logout.do")
+    public String logout(HttpServletRequest request) {
+
+        //세션 지우기
+        request.getSession().invalidate();
 
         return "main/main";
     }
 
-    @GetMapping("/layout")
-    public String test_Layout() {
 
-        return "layout/noMenu";
+    /**
+     * loggin 창
+     * @return
+     */
+    @GetMapping("/main/login.do")
+    public String login() {
+
+        try {
+        }
+        catch (Exception e) {
+
+        }
+
+        return "login";
     }
 
-    @GetMapping("/layout_test")
-    public String test_Layout02() {
 
-        return "member/content2";
-    }
+    /**
+     * main 이동
+     * @return
+     */
+    @GetMapping("/main/main.do")
+    public String Main() {
 
-    @GetMapping("/layout2")
-    public String test_layout03() {
 
-        return "layout/default_layout";
+        return "main/main";
     }
 }

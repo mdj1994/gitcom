@@ -18,11 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         log.info("Request URI ==>  :"+request.getRequestURI());
         log.info("============================================");
 
-        boolean check = false;
 
-        if(!check && request.getSession().getAttribute("member") != null) {
-            check = true;
-        }
         //response.sendRedirect("/");
 
         return true;
