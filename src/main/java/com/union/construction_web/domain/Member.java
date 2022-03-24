@@ -20,4 +20,5 @@ public class Member {
     private String last_conn_date;  //최종접속일자
     private String passwd;          //비밀번호
     private String gubun;           //회원 등급. (A: 총괄 관리자, M: 담당자, U: 일반사용자)
+    private String os_type;         //사용자 구분. (A : 안드로이드, I : 아이폰, etc : 기타)
 }

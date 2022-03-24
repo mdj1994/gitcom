@@ -77,11 +77,18 @@
         var pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
         if( (pattern_num.test(pwd)) && (pattern_eng.test(pwd)) && (pattern_spc.test(pwd)) ){
 
+            if(pwd.length < 8) {
+
+                $('#popup_pwd').css('display','flex');    //비밀번호 입력 안했을 시, popup창 생성
+                console.log('자리 숫자 안 맞음');
+                return;
+            }
             joinAction(pwd);    //가입 action 진행하기
 
 
         }else{
             $('#popup_pwd').css('display','flex');    //비밀번호 입력 안했을 시, popup창 생성
+            console.log('숫자 문자 특수문자 부족');
             return false;
         }
       //location.href=[[@{/member/membership04.do}]];
@@ -89,6 +96,7 @@
 
     //비밀번호가 서로 일치하지 않을 경우
     else {
+        console.log('서로 다른 비밀번호');
         $('#popup_pwd').css('display', 'flex');
     }
   });
@@ -106,11 +114,24 @@
       let mobile_no = [[${result.getMobile_no()}]];
       let member_nm = [[${result.getMember_nm()}]];
 
+      //OS 구분하기
+      let userOS = navigator.userAgent.toLowerCase();
+      if(userOS.indexOf("android") > -1) {
+          userOS = 'A';
+      }
+      else if ( userOS.indexOf("iphone") > -1||userOS.indexOf("ipad") > -1||userOS.indexOf("ipod") > -1 ) {
+          userOS = "I";
+      } else {
+          userOS = "etc";
+      }
+
+
       let data = new FormData();
       data.append('mobile_no', mobile_no);
       data.append('member_nm', member_nm);
       data.append('member_id', member_id);
       data.append('passwd', pwd);
+      data.append('os_type', userOS);
 
       const APIURL = [[${@environment.getProperty('API_SERVER')}]];
       const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
@@ -126,6 +147,7 @@
           processData : false,
           success : function(data) {
             console.log(data);
+            location.href= WEBURL+'/member/membership04.do';
           },
           error : function(request, status, error) {
               $('#popup_div').show();
