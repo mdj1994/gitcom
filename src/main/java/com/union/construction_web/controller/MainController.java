@@ -52,7 +52,7 @@ public class MainController extends BaseController {
 
         }
 
-        return "test/test01";
+        return "layout/header";
     }
 
     @GetMapping("/main/login.do")

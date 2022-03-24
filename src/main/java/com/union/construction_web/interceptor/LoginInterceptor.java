@@ -18,10 +18,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         log.info("Request URI ==>  :"+request.getRequestURI());
         log.info("============================================");
 
-        if(request.getSession().getAttribute("member") != null) {
-            System.out.println("세션 확인");
-        } else {
-            System.out.println("세션 없네");
+        boolean check = false;
+
+        if(!check && request.getSession().getAttribute("member") != null) {
+            check = true;
         }
         //response.sendRedirect("/");
 

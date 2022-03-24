@@ -71,8 +71,6 @@
         data.append("passwd", userpwd);
         data.append("os_type", userOS);
 
-        //const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
-        //const URL = APIURL+'/user/member/loginAction.ajax';
 
         const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];   //properties에 저장 된 API URL 불러오기
         const URL = WEBURL+'/member/loginAction.do';
@@ -87,7 +85,8 @@
           success : function(data) {
             console.log(data);
             if(data == 0) {
-              alert('oh!');
+
+              location.href=WEBURL+'/main/main.do';
 
             }
             //data 없음
@@ -104,27 +103,6 @@
           }
         });
       });
-
-
-      function LoginAction(data) {
-
-
-        const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];   //properties에 저장 된 API URL 불러오기
-        const URL = WEBURL+'/member/loginAction.do';
-
-        let getData = data.stringify(data);
-
-        $.ajax({
-          url: URL,
-          data: {data : getData},
-          type: 'post',
-          dataType: 'json',
-          success: function (data) {
-
-          }
-        });
-      }
-
 
 
       // id부분 마우스 커서시

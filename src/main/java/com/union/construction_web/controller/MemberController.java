@@ -45,21 +45,20 @@ public class MemberController extends BaseController {
             //API 호출로 값 가져오기
             jsonObject = sendPost(API_SERVER + "/user/member/loginAction.ajax", jsonString);
 
-            System.out.println(jsonObject);
+            //API 결과값이 0일 경우, 성공
             if(jsonObject.get("RST_CD").toString().equals("0")) {
 
                 HttpSession session = request.getSession();
-                System.out.println(member.getMember_id());
-                session.setAttribute("member", member);
+                session.setAttribute("member", member);  //login data를 session에 저장
+                session.setAttribute("login", true);
 
-                System.out.println(session.getAttribute("member"));
             }
         }
         catch(Exception e) {
 
         }
 
-        return jsonObject.get("RST_CD").toString();
+        return jsonObject.get("RST_CD").toString(); //결과값을 그대로 web에 전달
     }
 
 

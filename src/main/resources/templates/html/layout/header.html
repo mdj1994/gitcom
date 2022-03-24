@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lagn="ko" xmlns:th="http://www.thymeleaf.org">
 <header id="header_container" th:fragment="headerFragment">
+
+  <th:block th:if="${session.login}">
+    login여부 확인
+  </th:block>
+
   <div class="inner">
     <div class="header_top">
       <h1><a th:href="@{/main/main.do}">대한전문건설협회</a></h1>
@@ -22,5 +27,6 @@
       </nav>
     </div>
   </div>
+
 </header>
 </html>
