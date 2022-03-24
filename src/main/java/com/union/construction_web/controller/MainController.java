@@ -18,7 +18,7 @@ public class MainController extends BaseController {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @Value("${API_SERVER.key}")
+    @Value("${API_SERVER}")
     private String API_SERVER;
 
 

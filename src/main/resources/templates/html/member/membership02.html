@@ -114,8 +114,8 @@
 
             let certifyNo = $('#certifyNo').val();
 
-            const APIURL = [[${@environment.getProperty('API_SERVER.key')}]];   //properties에 저장 된 API URL 불러오기
-            const WEBURL = [[${@environment.getProperty('WEB_SERVER.key')}]];
+            const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+            const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
             const URL = APIURL+'/user/member/snsResult.ajax';
 
             $.ajax({

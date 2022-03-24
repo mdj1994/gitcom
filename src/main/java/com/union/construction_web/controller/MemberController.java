@@ -67,11 +67,10 @@ public class MemberController extends BaseController {
             model.addAttribute("mobile_no", member.getMobile_no());
             model.addAttribute("member_nm", member.getMember_nm());
 
-            model.addAttribute("RST_CD", 0);
 
         }
         catch (Exception e) {
-            model.addAttribute("RST_CD", -1);
+
         }
 
         return "member/membership03";
