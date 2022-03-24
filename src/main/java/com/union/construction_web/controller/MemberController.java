@@ -1,6 +1,7 @@
 package com.union.construction_web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.union.construction_web.domain.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,7 +57,22 @@ public class MemberController extends BaseController {
      * @return
      */
     @GetMapping("/member/membership03.do")
-    public String membership03() {
+    public String membership03(Member member, Model model) {
+
+        try {
+
+            log.info("name : "+member.getMember_nm());
+            log.info("mobile no : "+member.getMobile_no());
+
+            model.addAttribute("mobile_no", member.getMobile_no());
+            model.addAttribute("member_nm", member.getMember_nm());
+
+            model.addAttribute("RST_CD", 0);
+
+        }
+        catch (Exception e) {
+            model.addAttribute("RST_CD", -1);
+        }
 
         return "member/membership03";
     }

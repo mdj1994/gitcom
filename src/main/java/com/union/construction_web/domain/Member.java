@@ -1,8 +1,12 @@
 package com.union.construction_web.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public class Member {
 
     //회원정보 관리

@@ -67,9 +67,12 @@
     <script layout:fragment="javascript" th:inline="javascript">
 
         let snsCheck = 'n';
+        //$('#result_check').attr('disabled', true);  //시작시 인증하기 버튼 disabled 처리
 
         //인증번호 발송
         $('#btn_snsSend').click(function() {
+            //$('#result_check').removeAttr('disabled');  //인증하기 버튼 disabled 처리 해제
+
             let phoneNo = [[${mobile_no}]];  //전화번호 정보 가져오기
             let user_nm = [[${user_nm}]];   //사용자 정보 가져오기
 
@@ -101,6 +104,9 @@
         //인증하기 클릭
         $('#result_check').click(function() {
 
+            let phoneNo = [[${mobile_no}]];  //전화번호 정보 가져오기
+            let user_nm = [[${user_nm}]];   //사용자 정보 가져오기
+
             //인증번호 발송 클릭 안 했을 경우
             if(snsCheck != 'y') {
                 $('#popup_sns').show();
@@ -109,6 +115,7 @@
             let certifyNo = $('#certifyNo').val();
 
             const APIURL = [[${@environment.getProperty('API_SERVER.key')}]];   //properties에 저장 된 API URL 불러오기
+            const WEBURL = [[${@environment.getProperty('WEB_SERVER.key')}]];
             const URL = APIURL+'/user/member/snsResult.ajax';
 
             $.ajax({
@@ -120,7 +127,7 @@
                     console.log(data);
                     if(data.RST_CD == 0) {
 
-                        location.href='/member/membership03.do';
+                        location.href=WEBURL+'/member/membership03.do?mobile_no='+phoneNo+'&member_nm='+user_nm;
                     } else {
                         $('#popup_div').show();
                     }

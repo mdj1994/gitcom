@@ -37,33 +37,60 @@
       </div>
     </div>
 
+    <!-- 비밀번호 일치 여부 확인 -->
     <!-- s: popup -->
-    <div class="popup_wrap" style="display: none;">
+    <div class="popup_wrap" style="display: none;" id="popup_pwd">
         <div class="msgPopup_wrap">
           <h2 class="pHeader">알림</h2>
           <div class="pBody">
-            <p class="msg01">정보가 존재하지 않습니다.<br>확인 후, 다시 시도해주세요.</p>
+            <p class="msg01">비밀번호를 양식에 맞게 입력해주세요.</br>숫자, 문자, 특수문자 조합 8자 이상</p>
             <button type="button" class="btn_type01" id="retry">다시시도</button>
           </div> 
         </div>
       </div>
       <!-- e: popup -->
+
+
 </th:block>
 <script layout:fragment="javascript" th:inline="javascript">
 
   //가입 완료 클릭
   $('#button_active').click(function() {
+
+
+    //비밀번호 입력 안 할 경우
     if($('#pswd1').val() === '') {
-      $('.popup_wrap').css('display','flex');
+      $('#popup_pwd').css('display','flex');    //비밀번호 입력 안했을 시, popup창 생성
     }
+    //비밀번호가 서로 일치할 경우
     else if($('#pswd1').val() === $('#pswd2').val()) {
-      location.href=[[@{/member/membership04.do}]];
+
+        let pwd = $('#pswd1').val();    //비밀번호 1 입력 받기
+
+        //유효성 검사 하기
+        var pattern_num = /[0-9]/;	// 숫자
+        var pattern_eng = /[a-zA-Z]/;	// 문자
+        var pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자
+        if( (pattern_num.test(pwd)) && (pattern_eng.test(pwd)) && (pattern_spc.test(pwd)) ){
+
+
+
+        }else{
+            $('#popup_pwd').css('display','flex');    //비밀번호 입력 안했을 시, popup창 생성
+            return false;
+        }
+      //location.href=[[@{/member/membership04.do}]];
+    }
+
+    //비밀번호가 서로 일치하지 않을 경우
+    else {
+        $('#popup_pwd').css('display', 'flex');
     }
   });
 
   //popup 다시 시도 클릭
   $('#retry').click(function() {
-    $('.popup_wrap').css('display','none');
+    $('#popup_pwd').css('display','none');
   });
 </script>
 </html>
