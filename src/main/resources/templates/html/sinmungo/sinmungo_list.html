@@ -129,7 +129,7 @@
             </tbody>
           </table>
           <div class="pagingNbtn">
-            <div class="btn_write"><a href="/sinmungo/sinmungo_write.do"><span>글쓰기</span></a></div>
+            <div class="btn_write"><a th:href="@{/sinmungo/sinmungo_write.do}"><span>글쓰기</span></a></div>
             <div class="paging">
               <a href="#" class="front"></a>
               <a href="#" class="prev"></a>
@@ -145,6 +145,24 @@
         </div>
       </div>
     </div>
+
+  <!-- 비밀글 열었을 경우 popup창 생성 -->
+  <!-- s: pwd -->
+  <div class="popup_wrap" style="display:none;" id="popup_secret">
+    <div class="msgPopup_wrap">
+      <h2 class="pHeader">알림</h2>
+      <div class="pBody">
+        <div class="pwdEntry">
+          <p>비밀번호를 입력해주세요.</p>
+          <input type="text" class="entry" />
+        </div>
+        <button type="button" class="btn_type01">확인</button>
+      </div>
+    </div>
+  </div>
+  <!-- e: pwd -->
+
+
 </th:block>
 <script layout:fragment="javascript" th:inline="javascript">
 
@@ -152,7 +170,32 @@
   <!-- detail 이동 -->
   function detail_move(num) {
     // location.href="/sinmungo/sinmungo_detail.do";
-    location.href=[[@{/sinmungo/sinmungo_detail.do}]];
+
+    const APIURL = [[${@environment.getProperty('API_SERVER')}]];
+    const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+    const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
+
+    $.ajax({
+      url : URL,
+      type : 'post',
+      data : {'sinmungo' : num},
+      dataType : 'json',
+      contentType : false,
+      processData : false,
+      success :function(data) {
+        console.log(data);
+        if(data.RST_CD == 0) {
+          location.href=[[@{/sinmungo/sinmungo_detail.do}]];
+        }
+      },
+      error : function(request, status, error) {
+        $('#popup_div').show();
+        console.log("code : "+request.status+"\nmessage : "+request.responseText+"\nerror : "+error);
+      }
+    })
+
+
+
   }
 
 </script>
