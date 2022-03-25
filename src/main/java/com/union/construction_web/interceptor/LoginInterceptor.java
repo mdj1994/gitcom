@@ -20,12 +20,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         log.info("Request URI ==>  :"+request.getRequestURI());
         log.info("============================================");
 
-        //member는 회원부분이므로 nav가 필요없다.
-        if(request.getRequestURI().indexOf("/member/") < 0) {
-            request.setAttribute("nav", false);
-        } else {
-            request.setAttribute("nav", true);
+        String context = request.getContextPath();  //path 설정 시 값 생성
+        String url = request.getRequestURI().substring(context.length()+1); //해당 url에서 설정된 path 있을 시 제거. +1
+        String nav = "main";
+        if(!(url.length() <= 1)) {
+            System.out.println(url);
+            nav = url.substring(0,url.indexOf("/"));
+
         }
+        request.setAttribute("nav", nav);
+
+
 
         //response.sendRedirect("/");
 
