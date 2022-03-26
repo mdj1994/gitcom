@@ -154,9 +154,9 @@
       <div class="pBody">
         <div class="pwdEntry">
           <p>비밀번호를 입력해주세요.</p>
-          <input type="text" class="entry" />
+          <input type="text" class="entry" id="secrit_text"/>
         </div>
-        <button type="button" class="btn_type01">확인</button>
+        <button type="button" class="btn_type01" id="btn_result">확인</button>
       </div>
     </div>
   </div>
@@ -168,6 +168,8 @@
 
   const APIURL = [[${@environment.getProperty('API_SERVER')}]];
   const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+
+  let last_idx = '';
 
   $(document).ready(function() {
     selectList('1');
@@ -236,14 +238,12 @@
 
   <!-- detail 이동 -->
   function detail_move(num) {
+    last_idx = num;
 
     const URL = APIURL + '/user/sinmungo/sinmungo_secrit.ajax';
-    //location.href=[[@{/sinmungo/sinmungo_detail.do}]]+'?idx='+num;
 
-    //const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
     let data = new FormData;
-    console.log(num);
-    data.append("sinmungo_no", num);
+    data.append("sinmungo_no", last_idx);
 
     $.ajax({
       url : URL,
@@ -262,14 +262,44 @@
         }
       },
       error : function(request, status, error) {
-        $('#popup_div').show();
         console.log("code : "+request.status+"\nmessage : "+request.responseText+"\nerror : "+error);
       }
     });
-
-
-
   }
+
+  <!-- 비공개글 입장 popup 확인 버튼-->
+  $('#btn_result').click(function() {
+    let passwd = $('#secrit_text').val(); //popup 창 입력값 가져오기
+    $('#secrit_text').val('');
+
+
+    const URL = APIURL + '/user/sinmungo/sinmungo_secrit.ajax';
+
+
+    let data = new FormData;
+    data.append("sinmungo_no", last_idx);
+    data.append("publish_passwd", passwd);
+
+    $.ajax({
+      url: URL,
+      type: 'post',
+      data: data,
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      success: function (data) {
+        console.log(data);
+        if (data.RST_CD == 0) {
+          location.href = [[@{/sinmungo/sinmungo_detail.do}]]+'?idx='+last_idx;
+        } else if (data.RST_CD == '-2') {
+          $('#popup_secret').hide();
+        }
+      },
+      error: function (request, status, error) {
+        console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+      }
+    });
+  });
 
 </script>
 </html>
