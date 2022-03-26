@@ -84,25 +84,89 @@
         </div>
       </div>
     </div>
+
+    <!-- 비밀글 열었을 경우 popup창 생성 -->
+    <!-- s: pwd -->
+    <div class="popup_wrap" style="display:none;" id="popup_secret">
+        <div class="msgPopup_wrap">
+            <h2 class="pHeader">알림</h2>
+            <div class="pBody">
+                <div class="pwdEntry">
+                    <p>비밀번호를 입력해주세요.</p>
+                    <input type="text" class="entry" id="secrit_text"/>
+                </div>
+                <button type="button" class="btn_type01" id="btn_result">확인</button>
+            </div>
+        </div>
+    </div>
+    <!-- e: pwd -->
 </th:block>
 <script layout:fragment="javascript" th:inline="javascript">
 
     const APIURL = [[${@environment.getProperty('API_SERVER')}]];
     const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+    let passwd = '';
 
     //제일 처음 실행
     $(document).ready(function() {
 
+        passwd = [[${session?.last_passwd}]];
+
+        //공백일 경우, url로 호출 한 경우.
+        if(passwd == null) {
+
+            const URL = APIURL + '/user/sinmungo/sinmungo_secrit.ajax';
+
+            let data = new FormData;
+            data.append("sinmungo_no", [[${idx}]]);
+
+            $.ajax({
+                url : URL,
+                type : 'post',
+                data : data,
+                dataType : 'json',
+                contentType : false,
+                processData : false,
+                success :function(data) {
+                    console.log(data);
+                    if(data.RST_CD == 0) {
+                        detail_show(); //상세 보기
+                    }
+                    else if(data.RST_CD == '-2') {
+                        $('#popup_secret').show();
+                    }
+                },
+                error : function(request, status, error) {
+                    console.log("code : "+request.status+"\nmessage : "+request.responseText+"\nerror : "+error);
+                }
+            });
+        }
+        else {
+            detail_show(); //상세 보기
+        }
+
+
+    });
+
+    $('#btn_result').click(function() {
+        let passwd = $('#secrit_text').val(); //popup 창 입력값 가져오기
+        $('#popup_secret').hide();
+
+        detail_show();
+    });
+
+    //상세보기
+    function detail_show() {
         const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
 
         let idx = [[${idx}]];
 
         let data = new Object;
         data.idx = idx;
+
         let id_check = [[${session?.member?.member_no}]];
         if(id_check != null) {
             data.no = id_check;
-            console.log(id_check);
         }
 
         $.ajax({
@@ -132,8 +196,6 @@
                 console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
             }
         });
-
-
-    });
+    }
 </script>
 </html>
