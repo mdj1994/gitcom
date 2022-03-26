@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class SinmungoController extends BaseController {
@@ -45,6 +47,21 @@ public class SinmungoController extends BaseController {
 
 
         return "sinmungo/sinmungo_detail";
+    }
+
+    /**
+     * 신문고 비밀글 여부
+     * @return
+     */
+    @GetMapping("/sinmungo/sinmungo_secrit_detail.do")
+    public String sinmungo_detail(@RequestParam(value="idx", required = false) int idx
+                                  ,@RequestParam(value="secrit", required = false) String secrit
+                                  ,HttpServletRequest request) {
+
+        request.getSession().setAttribute("last_passwd", secrit);
+
+
+        return "redirect:/sinmungo/sinmungo_detail.do?idx="+idx;
     }
 
     /**
