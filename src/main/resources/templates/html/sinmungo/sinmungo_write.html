@@ -125,7 +125,7 @@
     var data = new FormData();
     data.append("title", $('#note_title').val());         //제목
     data.append("contents", $('#note_content').val());    //내용
-    data.append("branch_no", $('#branch_option').val());  //지점번호
+    data.append("sinmungo_branch_no", $('#branch_option').val());  //지점번호
     data.append("reg_member_no", [[${session.member.member_no}]]);
     console.log([[${session.member.member_no}]]);
 

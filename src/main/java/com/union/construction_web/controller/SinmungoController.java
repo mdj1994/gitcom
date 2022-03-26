@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class SinmungoController extends BaseController {
@@ -37,12 +40,21 @@ public class SinmungoController extends BaseController {
     }
 
     /**
-     * 신문고 글쓰기
+     * 신문고 글쓰기 - 로그인여부 파악하기
      * @return
      */
     @GetMapping("/sinmungo/sinmungo_write.do")
-    public String sinmungo_write() {
+    @ResponseBody
+    public String sinmungo_write(HttpServletRequest request) {
 
-        return "sinmungo/sinmungo_write";
+        String result = "1";        //0 성공, 1 실패
+
+        if(request.getSession().getAttribute("member") != null) {
+            result = "0";
+        } else {
+            result = "1";
+        }
+
+        return result;
     }
 }

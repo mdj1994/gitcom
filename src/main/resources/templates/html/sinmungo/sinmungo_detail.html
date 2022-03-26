@@ -7,18 +7,18 @@
       <div class="body_inner">
         <div class="sub01_detail">
             <div class="header">
-                <h3 class="title">341. 공공기관 공모전의 투명한 운영을 위한 제안합니다. </h3>
+                <h3 class="title"><span id="note_no">341</span>. <span id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span> </h3>
                 <div class="writerNdate">
                     <span class="writer">작성자</span>
-                    <span class="name">홍길동 (경기지부 | KICT)</span>
-                    <span class="date">2022-03-31</span>
+                    <span class="name"><span id="note_nm">홍길동</span> <span>(경기지부 | KICT)</span></span>
+                    <span class="date" id="note_date">2022-03-31</span>
                 </div>
                 <div class="rcd">
                     <span class="tit">추천수</span>
                     <strong class="no">9,999</strong>
                 </div>
             </div>
-            <div class="content">
+            <div class="content" id="note_contents">
                 <ol>
                     <li>1. 정부는 관계부처 합동으로 「건설현장 불법행위 TF」를 구성(’21.10월)하고 집중감독을 실시(’21.10월~12월)한 결과, 불법행위자의 체포·구속, 과태료 부과, 
                         시정조치 등 현장 불법행위에 대해 엄정 조치를 취하였습니다.</li>
@@ -85,5 +85,41 @@
       </div>
     </div>
 </th:block>
-<script layout:fragment="javascript"></script>
+<script layout:fragment="javascript" th:inline="javascript">
+
+    const APIURL = [[${@environment.getProperty('API_SERVER')}]];
+    const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+
+    //제일 처음 실행
+    $(document).ready(function() {
+
+        const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
+
+        let idx = 3;
+        console.log(idx);
+
+        $.ajax({
+            url : URL,
+            data : {'idx' : idx},
+            type : 'post',
+            dataType : 'json',
+            success : function(data) {
+                console.log(data);
+                if(data.RST_CD == 0) {
+                    let result = data.result;
+                    $('#note_no').html(result.sinmungo_no);
+                    $('#note_title').html(result.title);
+                    $('#note_contents').html(result.contents);
+                    $('#note_nm').html(result.member_nm);
+                    $('#note_date').html(result.reg_date);
+                }
+            },
+            error: function (request, status, error) {
+                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        });
+
+
+    });
+</script>
 </html>

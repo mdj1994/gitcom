@@ -80,7 +80,6 @@
             if(pwd.length < 8) {
 
                 $('#popup_pwd').css('display','flex');    //비밀번호 입력 안했을 시, popup창 생성
-                console.log('자리 숫자 안 맞음');
                 return;
             }
             joinAction(pwd);    //가입 action 진행하기
@@ -88,7 +87,6 @@
 
         }else{
             $('#popup_pwd').css('display','flex');    //비밀번호 입력 안했을 시, popup창 생성
-            console.log('숫자 문자 특수문자 부족');
             return false;
         }
       //location.href=[[@{/member/membership04.do}]];
@@ -96,7 +94,6 @@
 
     //비밀번호가 서로 일치하지 않을 경우
     else {
-        console.log('서로 다른 비밀번호');
         $('#popup_pwd').css('display', 'flex');
     }
   });
