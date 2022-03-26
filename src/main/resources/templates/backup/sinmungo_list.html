@@ -237,28 +237,25 @@
   <!-- detail 이동 -->
   function detail_move(num) {
 
-    const URL = APIURL + '/user/sinmungo/sinmungo_secrit.ajax';
-    //location.href=[[@{/sinmungo/sinmungo_detail.do}]]+'?idx='+num;
+    const URL = APIURL + '/user/member/sinmungo_secrit.ajax';
+    location.href=[[@{/sinmungo/sinmungo_detail.do}]]+'?idx='+num;
 
-    //const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
-    let data = new FormData;
-    console.log(num);
-    data.append("sinmungo_no", num);
+    return;
+
+
+    const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
 
     $.ajax({
       url : URL,
       type : 'post',
-      data : data,
+      data : {'sinmungo' : num},
       dataType : 'json',
       contentType : false,
       processData : false,
       success :function(data) {
         console.log(data);
         if(data.RST_CD == 0) {
-          location.href=[[@{/sinmungo/sinmungo_detail.do}]]+'?idx='+num;
-        }
-        else if(data.RST_CD == '-2') {
-          $('#popup_secret').show();
+          location.href=[[@{/sinmungo/sinmungo_detail.do}]];
         }
       },
       error : function(request, status, error) {

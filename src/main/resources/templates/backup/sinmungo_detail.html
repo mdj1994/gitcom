@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+<th:block layout:fragment="contentFragment">
+    <div id="body_container">
+      <div class="body_inner">
+        <div class="sub01_detail">
+            <div class="header">
+                <h3 class="title"><span id="note_no">341</span>. <span id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span> </h3>
+                <div class="writerNdate">
+                    <span class="writer">작성자</span>
+                    <span class="name"><span id="note_nm">홍길동</span> <span>(경기지부 | KICT)</span></span>
+                    <span class="date" id="note_date">2022-03-31</span>
+                </div>
+                <div class="rcd">
+                    <span class="tit">추천수</span>
+                    <strong class="no">9,999</strong>
+                </div>
+            </div>
+            <div class="content" id="note_contents">
+                <ol>
+                    <li>1. 정부는 관계부처 합동으로 「건설현장 불법행위 TF」를 구성(’21.10월)하고 집중감독을 실시(’21.10월~12월)한 결과, 불법행위자의 체포·구속, 과태료 부과, 
+                        시정조치 등 현장 불법행위에 대해 엄정 조치를 취하였습니다.</li>
+                    <li>2. 이와 관련하여 정부의 주요 조치 사례와 채용절차법상 채용강요 금지 조항(법 제4조의2) 구체화 지침을 붙임과 같이 알려드리니 피해사례 발생시 국토부 내 「건설현장
+                        채용질서 신고센터」를 적극 활용하고 현장 불법행위에 대응할 수 있도록 참고하여 주시기 바랍니다.</li>
+                </ol>
+                <div class="add">
+                    붙 임<a href="#"> 1. 건설현장 불법행위 정부 조치 사례 및 지침 1부.</a><br>
+                    <a href="#">2. 「건설현장 채용질서 신고센터」 관련 자료 1부</a> 끝.
+                </div>
+            </div> 
+
+            <div class="btn_wrap">
+              <div class="btn_area">
+                  <a th:href="@{/sinmungo/sinmungo_list.do}" class="btn_list"><span>목록</span></a>
+                  <a href="#" class="btn_modify" style="display: none" id="btn_update"><span>글수정</span></a>
+              </div>
+              <div class="good"><button type="button" style="display: none" id="btn_good">추천</button></div>
+            </div> 
+
+            <div class="comment_wrap">
+              <div class="commentEntry_wrap">
+                <div class="count">댓글수 <strong>1,132</strong></div>
+                <div class="commentEntry">
+                  <strong class="name">홍길동</strong>
+                  <textarea rows="20" cols="100" placeholder="100자 이내로 댓글을 작성해주세요."></textarea>
+                  <button class="btn_entry">등록</button>
+                </div>
+              </div>
+              <div class="commentList_wrap">
+                <ul>
+                  <li>
+                    <div class="hd">
+                      <strong class="name">신사임당</strong>
+                      <span class="date">2022-02-03</span>
+                    </div>
+                    <div class="txt">이와 관련하여 정부의 주요 조치 사례와 채용절차법상 채용강요 금지 조항(법 제4조의2) 구체화 지침을 붙임과 같이 알려드리니 피해사례 발생시 국토부 내 「건설현장 채용질서 신고센터」를 적극 활용하고 현장 불법행위에  대응할 수 있도록 참고하여 주시기 바랍니다.</div>
+                  </li>
+                  <li>
+                    <div class="hd">
+                      <strong class="name">신사임당</strong>
+                      <span class="date">2022-02-03</span>
+                    </div>
+                    <div class="txt">이와 관련하여 정부의 주요 조치 사례와 채용절차법상 채용강요 금지 조항(법 제4조의2) 구체화 지침을 붙임과 같이 알려드리니 피해사례 발생시 국토부 내 「건설현장 채용질서 신고센터」를 적극 활용하고 현장 불법행위에  대응할 수 있도록 참고하여 주시기 바랍니다.</div>
+                  </li>
+                  <li>
+                    <div class="hd">
+                      <strong class="name">신사임당</strong>
+                      <span class="date">2022-02-03</span>
+                    </div>
+                    <div class="txt">이와 관련하여 정부의 주요 조치 사례와 채용절차법상 채용강요 금지 조항(법 제4조의2) 구체화 지침을 붙임과 같이 알려드리니 피해사례 발생시 국토부 내 「건설현장 채용질서 신고센터」를 적극 활용하고 현장 불법행위에  대응할 수 있도록 참고하여 주시기 바랍니다.</div>
+                  </li>
+                  <li>
+                    <div class="hd">
+                      <strong class="name">신사임당</strong>
+                      <span class="date">2022-02-03</span>
+                    </div>
+                    <div class="txt">이와 관련하여 정부의 주요 조치 사례와 채용절차법상 채용강요 금지 조항(법 제4조의2) 구체화 지침을 붙임과 같이 알려드리니 피해사례 발생시 국토부 내 「건설현장 채용질서 신고센터」를 적극 활용하고 현장 불법행위에  대응할 수 있도록 참고하여 주시기 바랍니다.</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</th:block>
+<script layout:fragment="javascript" th:inline="javascript">
+
+    const APIURL = [[${@environment.getProperty('API_SERVER')}]];
+    const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+
+    //제일 처음 실행
+    $(document).ready(function() {
+
+        const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
+
+        let idx = [[${idx}]];
+
+        let data = new Object;
+        data.idx = idx;
+        let id_check = [[${session?.member?.member_no}]];
+        if(id_check != null) {
+            data.no = id_check;
+            console.log(id_check);
+        }
+
+        $.ajax({
+            url : URL,
+            data : data,
+            type : 'post',
+            dataType : 'json',
+            success : function(data) {
+                console.log(data);
+                if(data.RST_CD == 0) {
+                    let result = data.result;
+                    $('#note_no').html(result.sinmungo_no);
+                    $('#note_title').html(result.title);
+                    $('#note_contents').html(result.contents);
+                    $('#note_nm').html(result.member_nm);
+                    $('#note_date').html(result.reg_date);
+
+                    console.log(data.id_check);
+                    if(data.id_check == 1) {
+                        $('#btn_update').show();
+                    } else if(data.id_check == 2) {
+                        $('#btn_good').show();
+                    }
+                }
+            },
+            error: function (request, status, error) {
+                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        });
+
+
+    });
+</script>
+</html>
