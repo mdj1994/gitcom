@@ -129,7 +129,7 @@
             </tbody>
           </table>
           <div class="pagingNbtn">
-            <div class="btn_write"><a th:href="@{/sinmungo/sinmungo_write.do}"><span>글쓰기</span></a></div>
+            <div class="btn_write"><a href="javascript:write_move()"><span>글쓰기</span></a></div>
             <div class="paging">
               <a href="#" class="front"></a>
               <a href="#" class="prev"></a>
@@ -166,11 +166,15 @@
 </th:block>
 <script layout:fragment="javascript" th:inline="javascript">
 
+  const APIURL = [[${@environment.getProperty('API_SERVER')}]];
+  const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+
+
   <!-- 글쓰기 이동 -->
   function write_move() {
 
+    location.href = WEBURL+'/sinmungo/sinmungo_write.do';
   }
-
 
   <!-- detail 이동 -->
   function detail_move(num) {
@@ -178,8 +182,7 @@
 
     return;
 
-    const APIURL = [[${@environment.getProperty('API_SERVER')}]];
-    const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+
     const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
 
     $.ajax({

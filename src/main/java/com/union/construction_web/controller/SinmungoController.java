@@ -44,17 +44,14 @@ public class SinmungoController extends BaseController {
      * @return
      */
     @GetMapping("/sinmungo/sinmungo_write.do")
-    @ResponseBody
     public String sinmungo_write(HttpServletRequest request) {
 
         String result = "1";        //0 성공, 1 실패
 
         if(request.getSession().getAttribute("member") != null) {
-            result = "0";
+            return "sinmungo/sinmungo_write";
         } else {
-            result = "1";
+            return "redirect:/main/login.do";
         }
-
-        return result;
     }
 }
