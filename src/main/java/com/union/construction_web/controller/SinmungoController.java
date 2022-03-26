@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +36,13 @@ public class SinmungoController extends BaseController {
      * @return
      */
     @GetMapping("/sinmungo/sinmungo_detail.do")
-    public String sinmungo_detail() {
+    public String sinmungo_detail(@RequestParam(value="idx", required = false) int idx
+    , Model model) {
+
+        log.info(String.valueOf(idx));
+        model.addAttribute("idx", idx);
+
+
 
         return "sinmungo/sinmungo_detail";
     }

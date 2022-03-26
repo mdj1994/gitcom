@@ -34,9 +34,9 @@
             <div class="btn_wrap">
               <div class="btn_area">
                   <a th:href="@{/sinmungo/sinmungo_list.do}" class="btn_list"><span>목록</span></a>
-                  <a href="#" class="btn_modify"><span>글수정</span></a>
+                  <a href="#" class="btn_modify" style="display: none" id="btn_update"><span>글수정</span></a>
               </div>
-              <div class="good"><button type="button">추천</button></div>
+              <div class="good"><button type="button" style="display: none" id="btn_good">추천</button></div>
             </div> 
 
             <div class="comment_wrap">
@@ -95,12 +95,19 @@
 
         const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
 
-        let idx = 3;
-        console.log(idx);
+        let idx = [[${idx}]];
+
+        let data = new Object;
+        data.idx = idx;
+        let id_check = [[${session?.member?.member_no}]];
+        if(id_check != null) {
+            data.no = id_check;
+            console.log(id_check);
+        }
 
         $.ajax({
             url : URL,
-            data : {'idx' : idx},
+            data : data,
             type : 'post',
             dataType : 'json',
             success : function(data) {
@@ -112,6 +119,13 @@
                     $('#note_contents').html(result.contents);
                     $('#note_nm').html(result.member_nm);
                     $('#note_date').html(result.reg_date);
+
+                    console.log(data.id_check);
+                    if(data.id_check == 1) {
+                        $('#btn_update').show();
+                    } else if(data.id_check == 2) {
+                        $('#btn_good').show();
+                    }
                 }
             },
             error: function (request, status, error) {
