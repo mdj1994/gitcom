@@ -14,8 +14,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handle) throws  Exception {
 
-        System.out.println(request.getContextPath().length());
-
         log.info("============= construction_web =============");
         log.info("Request URI ==>  :"+request.getRequestURI());
         log.info("============================================");
@@ -29,9 +27,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         }
         request.setAttribute("nav", nav);
-
-
-
         //response.sendRedirect("/");
 
         return true;

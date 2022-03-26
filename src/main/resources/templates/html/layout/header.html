@@ -12,7 +12,7 @@
       <!-- session on -->
       <th:block th:if="${session.login}">
         <div class="rtl">
-          <span class="txt_account">반갑습니다.<strong>경기북부 홍길동</strong>님</span>
+          <span class="txt_account">반갑습니다.<strong th:text="'경기북부 '+${session.member.member_nm}"></strong>님</span>
           <a href="#" class="btn_alarm new">알림<span>10</span></a>
           <a th:href="@{/main/logout.do}" class="btn_out"><span>로그아웃</span></a>
         </div>
@@ -23,9 +23,6 @@
         <a th:href="@{/main/login.do}" class="btn_login">로그인이 필요합니다.</a>
       </th:block>
     </div>
-
-    <!--/*@thymesVar id="test" type=""*/-->
-    <h5 th:text="${test}"></h5>
 
     <div class="header_btm">
       <h2 class="mainTitle">회원 신문고</h2>
@@ -38,6 +35,15 @@
           <li class="gnb04"><a href="#">공지사항</a></li>
         </ul>
       </nav>
+      <th:block th:if="${nav!='member'}">
+        <a href="#" class="btn_search m">검색</a>
+        <div class="search_wrap">
+              <span>
+                <input type="text" placeholder="검색어 입력">
+                <button>검색</button>
+              </span>
+        </div>
+      </th:block>
     </div>
   </div>
 
