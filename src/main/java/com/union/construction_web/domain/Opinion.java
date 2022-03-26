@@ -5,13 +5,16 @@ import lombok.Data;
 @Data
 public class Opinion {
     
-    /* 의견 게시판 */
+    /* 게시판 옵션? */
     private long opinion_no;            //의견번호
+    
+    /* Board 상속
     private String title;               //의견게시판 제목
     private String contents;            //의견게시판 내용
     private String reg_date;            //등록일
     private long reg_member_no;         //등록회원번호
     private String state;               //의견게시판 현재 진행상태
+    */
     private long in_cnt;                //의견 참여자 수
     private String poll_from_date;      //투표 시작일
     private String poll_to_date;        //투표 완료일

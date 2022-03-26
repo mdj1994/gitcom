@@ -48,6 +48,14 @@ public class MemberController extends BaseController {
             //API 결과값이 0일 경우, 성공
             if(jsonObject.get("RST_CD").toString().equals("0")) {
 
+                JSONObject js = (JSONObject) jsonObject.get("result");
+
+                //data 옮기기
+                //log.info(jsonObject.get("result").toString());
+                member.setMember_no(Integer.valueOf(js.get("member_no").toString()));
+                member.setMember_nm(js.get("member_nm").toString());
+
+
                 HttpSession session = request.getSession();
                 session.setAttribute("member", member);  //login data를 session에 저장
                 session.setAttribute("login", true);
