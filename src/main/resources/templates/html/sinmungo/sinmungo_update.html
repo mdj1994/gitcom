@@ -44,7 +44,7 @@
                     <div class="btn_left"><a th:href="@{/sinmungo/sinmungo_list.do}" class="btn_list">목록</a></div>
                     <div class="btn_right">
                         <a th:href="@{/sinmungo/sinmungo_list.do}" class="btn_cancel">취소</a>
-                        <a class="btn_done" id="btn_result">작성완료</a>
+                        <a class="btn_done" id="btn_result">수정완료</a>
                     </div>
                 </div>
             </div>
@@ -76,14 +76,138 @@
     <!-- e: popup -->
 
 
-</th:block>
+    <!-- 비밀글 열었을 경우 popup창 생성 -->
+    <!-- s: pwd -->
+    <div class="popup_wrap" style="display:none;" id="popup_secret">
+        <div class="msgPopup_wrap">
+            <h2 class="pHeader">알림</h2>
+            <div class="pBody">
+                <div class="pwdEntry">
+                    <p>비밀번호를 입력해주세요.</p>
+                    <input type="text" class="entry" id="secrit_text"/>
+                </div>
+                <button type="button" class="btn_type01" id="btn_pop_result">확인</button>
+            </div>
+        </div>
+    </div>
+    <!-- e: pwd -->
+
+
+
 <script layout:fragment="javascript" th:inline="javascript">
 
     const APIURL = [[${@environment.getProperty('API_SERVER')}]];
     const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+    let passwd = '';
+
+    //제일 처음 실행
+    $(document).ready(function() {
+
+        passwd = [[${session?.last_passwd}]];
+
+        //공백일 경우, url로 호출 한 경우.
+        if(passwd == null || passwd == '0') {
 
 
-    $(document).ready(function () {
+            /* 공개글 / 비공개글 유무 파악 */
+            //html문구에서 값 수정으로 비밀글 공유 문제 해결.
+            //url로 값 추출 문제 해결
+            const URL = APIURL + '/user/sinmungo/sinmungo_secrit.ajax';
+
+            let data = new FormData;
+            data.append("sinmungo_no", [[${idx}]]);
+
+
+            $.ajax({
+                url : URL,
+                type : 'post',
+                data : data,
+                dataType : 'json',
+                contentType : false,
+                processData : false,
+                success :function(data) {
+                    console.log(data);
+                    if(data.RST_CD == 0) {
+                        detail_show(); //상세 보기
+                    }
+                    else if(data.RST_CD == '-2') {
+                        $('#popup_secret').show();
+                    }
+                },
+                error : function(request, status, error) {
+                    console.log("code : "+request.status+"\nmessage : "+request.responseText+"\nerror : "+error);
+                }
+            });
+        }
+        else {
+            detail_show(); //상세 보기
+        }
+
+
+    });
+
+    $('#btn_pop_result').click(function() {
+        passwd = $('#secrit_text').val(); //popup 창 입력값 가져오기
+        $('#popup_secret').hide();
+
+        detail_show();
+    });
+
+    //상세보기
+    function detail_show() {
+        const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
+
+        let idx = [[${idx}]];
+
+        let data = new FormData;
+        data.append("sinmungo_no", idx);
+        data.append("publish_passwd", passwd);
+
+        let id_check = [[${session?.member?.member_no}]];
+        if(id_check != null) {
+            data.append("no", id_check);
+        }
+
+        $.ajax({
+            url : URL,
+            data : data,
+            type : 'post',
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                console.log(data);
+                if(data.RST_CD == 0) {
+                    let result = data.result;
+                    $('#note_no').val(result.sinmungo_no);
+                    $('#note_title').val(result.title);
+                    $('#note_contents').val(result.contents);
+                    $('#note_nm').val(result.member_nm);
+                    $('#note_date').val(result.reg_date);
+                    if(passwd != '0') {
+                        $('#note_passwd').val(passwd);
+                    }
+                    branch_list(result.sinmungo_branch_no);
+
+                    if(data.id_check == 1) {
+                        $('#btn_update').show();
+                    } else if(data.id_check == 2) {
+                        $('#btn_good').show();
+                    }
+                }
+
+                else if(data.RST_CD == '-2') {
+                    location.href=[[@{/sinmungo/sinmungo_list.do}]];
+                }
+            },
+            error: function (request, status, error) {
+                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        });
+    }
+
+
+    function branch_list(value) {
         const URL = APIURL + '/user/branch/branch_list.ajax';
 
         $.ajax({
@@ -99,6 +223,7 @@
                     }
 
                     $('#branch_option').html(option);
+                    $('#branch_option').val(value);
                 }
                 //
             },
@@ -106,8 +231,7 @@
                 console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
             }
         });
-    });
-
+    }
 
     <!-- 작성 완료 클릭 -->
     $('#btn_result').click(function () {
@@ -119,14 +243,16 @@
             return;
         }
         if (!($('#note_contents').val().length < 1000)) {
-            $('#popup_content').show();
+            $('#popup_contents').show();
             return;
         }
 
-        let passwd = $('#note_passwd').val();
+        passwd = $('#note_passwd').val();
+        const idx = [[${idx}]];     //게시글 번호
 
         //data 저장하기
         var data = new FormData();
+        data.append("sinmungo_no",idx);            //게시글 번호
         data.append("title", $('#note_title').val());         //제목
         data.append("contents", $('#note_contents').val());    //내용
         data.append("sinmungo_branch_no", $('#branch_option').val());  //지점번호
@@ -134,7 +260,7 @@
         data.append("publish_passwd", passwd);         //현재 글, 비밀번호 여부
 
 
-        const URL = APIURL + '/user/sinmungo/sinmungo_write.ajax';
+        const URL = APIURL + '/user/sinmungo/sinmungo_update.ajax';
 
         $.ajax({
             url: URL,
@@ -147,10 +273,11 @@
                 if(data.RST_CD == 0) {
 
                     if(passwd != '') {
-                        location.href = [[@{/sinmungo/sinmungo_secrit_detail.do}]]+'?idx='+data.last_idx+'&secrit='+passwd;
+                        location.href = [[@{/sinmungo/sinmungo_secrit_detail.do}]]+'?idx='+idx+'&secrit='+passwd;
                     }
                     else {
-                        location.href = [[@{/sinmungo/sinmungo_detail.do}]]+'?idx='+data.last_idx;
+                        passwd = 0;
+                        location.href = [[@{/sinmungo/sinmungo_secrit_detail.do}]]+'?idx='+idx+'&secrit='+passwd;
                     }
                 }
             },
@@ -171,7 +298,6 @@
     $('#p_content_close').click(function () {
         $('#popup_content').hide()
     });
-
 
 </script>
 </html>

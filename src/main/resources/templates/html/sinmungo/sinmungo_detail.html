@@ -34,7 +34,7 @@
             <div class="btn_wrap">
               <div class="btn_area">
                   <a th:href="@{/sinmungo/sinmungo_list.do}" class="btn_list"><span>목록</span></a>
-                  <a href="#" class="btn_modify" style="display: none" id="btn_update"><span>글수정</span></a>
+                  <a class="btn_modify" style="display: none" id="btn_update"><span>글수정</span></a>
               </div>
               <div class="good"><button type="button" style="display: none" id="btn_good">추천</button></div>
             </div> 
@@ -95,7 +95,7 @@
                     <p>비밀번호를 입력해주세요.</p>
                     <input type="text" class="entry" id="secrit_text"/>
                 </div>
-                <button type="button" class="btn_type01" id="btn_result">확인</button>
+                <button type="button" class="btn_type01" id="btn_pop_result">확인</button>
             </div>
         </div>
     </div>
@@ -113,7 +113,7 @@
         passwd = [[${session?.last_passwd}]];
 
         //공백일 경우, url로 호출 한 경우.
-        if(passwd == null) {
+        if(passwd == null || passwd == '0') {
 
 
             /* 공개글 / 비공개글 유무 파악 */
@@ -152,7 +152,7 @@
 
     });
 
-    $('#btn_result').click(function() {
+    $('#btn_pop_result').click(function() {
         passwd = $('#secrit_text').val(); //popup 창 입력값 가져오기
         $('#popup_secret').hide();
 
@@ -207,5 +207,11 @@
             }
         });
     }
+
+    $('#btn_update').click(function() {
+
+        location.href=[[@{/sinmungo/sinmungo_update.do}]]+'?idx='+[[${idx}]];
+
+    });
 </script>
 </html>
