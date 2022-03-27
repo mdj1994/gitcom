@@ -80,4 +80,21 @@ public class SinmungoController extends BaseController {
             return "redirect:/main/login.do";
         }
     }
+
+
+    @GetMapping("/sinmungo/sinmungo_update.do")
+    public String sinmungo_update(@RequestParam(value="idx", required = false) String idx,
+                                  HttpServletRequest request,
+                                  Model model) {
+
+        model.addAttribute("idx", String.valueOf(idx));
+
+        if(request.getSession().getAttribute("member") != null) {
+            return "sinmungo/sinmungo_update";
+        } else {
+            return "redirect:/main/login.do";
+        }
+
+
+    }
 }
