@@ -149,7 +149,7 @@
     });
 
     $('#btn_result').click(function() {
-        let passwd = $('#secrit_text').val(); //popup 창 입력값 가져오기
+        passwd = $('#secrit_text').val(); //popup 창 입력값 가져오기
         $('#popup_secret').hide();
 
         detail_show();
@@ -161,12 +161,13 @@
 
         let idx = [[${idx}]];
 
-        let data = new Object;
-        data.idx = idx;
+        let data = new FormData;
+        data.append("sinmungo_no", idx);
+        data.append("publish_passwd", passwd);
 
         let id_check = [[${session?.member?.member_no}]];
         if(id_check != null) {
-            data.no = id_check;
+            data.append("no", id_check);
         }
 
         $.ajax({
@@ -174,6 +175,8 @@
             data : data,
             type : 'post',
             dataType : 'json',
+            contentType: false,
+            processData: false,
             success : function(data) {
                 console.log(data);
                 if(data.RST_CD == 0) {
@@ -184,12 +187,15 @@
                     $('#note_nm').html(result.member_nm);
                     $('#note_date').html(result.reg_date);
 
-                    console.log(data.id_check);
                     if(data.id_check == 1) {
                         $('#btn_update').show();
                     } else if(data.id_check == 2) {
                         $('#btn_good').show();
                     }
+                }
+
+                else if(data.RST_CD == '-2') {
+                    location.href=[[@{/sinmungo/sinmungo_list.do}]];
                 }
             },
             error: function (request, status, error) {
