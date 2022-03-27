@@ -115,6 +115,10 @@
         //공백일 경우, url로 호출 한 경우.
         if(passwd == null) {
 
+
+            /* 공개글 / 비공개글 유무 파악 */
+            //html문구에서 값 수정으로 비밀글 공유 문제 해결.
+            //url로 값 추출 문제 해결
             const URL = APIURL + '/user/sinmungo/sinmungo_secrit.ajax';
 
             let data = new FormData;

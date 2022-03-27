@@ -72,6 +72,7 @@ public class SinmungoController extends BaseController {
     public String sinmungo_write(HttpServletRequest request) {
 
         String result = "1";        //0 성공, 1 실패
+        request.getSession().setAttribute("last_passwd", "0");
 
         if(request.getSession().getAttribute("member") != null) {
             return "sinmungo/sinmungo_write";

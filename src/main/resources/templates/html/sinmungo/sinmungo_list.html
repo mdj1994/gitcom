@@ -255,7 +255,8 @@
       success :function(data) {
         console.log(data);
         if(data.RST_CD == 0) {
-          location.href=[[@{/sinmungo/sinmungo_detail.do}]]+'?idx='+num;
+          passwd = 0;   //초기화
+          location.href = [[@{/sinmungo/sinmungo_secrit_detail.do}]]+'?idx='+last_idx+'&secrit='+passwd;
         }
         else if(data.RST_CD == '-2') {
           $('#popup_secret').show();
