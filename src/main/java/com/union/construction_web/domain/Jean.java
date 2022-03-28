@@ -3,7 +3,7 @@ package com.union.construction_web.domain;
 import lombok.Data;
 
 @Data
-public class Jean extends Board{
+public class Jean extends Board {
 
     /* 공개 제안 */
     private long jean_no;       //공개 제안 번호
@@ -15,7 +15,7 @@ public class Jean extends Board{
     private long reg_member_no; //등록된 회원 번호
     private String state;       //상태 값 (1 : 정상, 0 : 비정상)
     */
-    
+
     private long jean_branch_no;    //지역번호
     private long recom_cnt;     //의견 갯수
     private long comm_cnt;      //댓글 갯수

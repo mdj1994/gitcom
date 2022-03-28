@@ -25,6 +25,7 @@ public class MainController extends BaseController {
 
     /**
      * PC 시작값
+     *
      * @return
      */
     @GetMapping("/")
@@ -36,6 +37,7 @@ public class MainController extends BaseController {
 
     /**
      * logout
+     *
      * @param request
      * @return
      */
@@ -51,14 +53,14 @@ public class MainController extends BaseController {
 
     /**
      * loggin 창
+     *
      * @return
      */
     @GetMapping("/main/login.do")
     public String login() {
 
         try {
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -68,6 +70,7 @@ public class MainController extends BaseController {
 
     /**
      * main 이동
+     *
      * @return
      */
     @GetMapping("/main/main.do")

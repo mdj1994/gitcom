@@ -17,6 +17,7 @@ public class AnnouncementController extends BaseController {
 
     /**
      * 공개제안 글 목록
+     *
      * @return
      */
     @GetMapping("/announcement/announcement_list.do")

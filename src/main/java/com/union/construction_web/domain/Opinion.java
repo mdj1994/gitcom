@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class Opinion {
-    
+
     /* 게시판 옵션? */
     private long opinion_no;            //의견번호
-    
+
     /* Board 상속
     private String title;               //의견게시판 제목
     private String contents;            //의견게시판 내용
@@ -24,5 +24,5 @@ public class Opinion {
     private String item_text;           //문한 내용
     private long branch_no;             //대상 지부
     private String file_path;           //첨부파일경로
-    
+
 }
