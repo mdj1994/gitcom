@@ -308,6 +308,9 @@
                     arr+= '</ul>';
 
                     $('#content_list').html(arr);
+                } else if(data.RST_CD == '-2') {
+                    $('#comment_cnt').text('0');
+                    $('#content_list').html('');
                 }
             },
             error: function (request, status, error) {

@@ -25,7 +25,7 @@
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
-                <th scope="col">처리상태</th>
+                <th scope="col">댓글</th>
                 <th scope="col">추천</th>
               </tr>
             </thead>
@@ -208,11 +208,7 @@
             arr+= '<td class="write">'+list[i].member_nm+'</td>';
             arr+= '<td class="date">'+list[i].reg_date+'</td>';
             arr+= '<td class="state">';
-            if(list[i].proc_state == '0') {
-              arr+= '<span class="wait">'+'대기'+'</span></td>';
-            } else {
-              arr+= '<span class="done">'+'완료'+'</span></td>';
-            }
+              arr+= '<span class="wait">'+list[i].count+'</span></td>';
             arr+='<td class="rcd"><span>'+'no'+'</span>';
             arr+='</tr>';
           }
