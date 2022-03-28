@@ -25,7 +25,6 @@ public class SinmungoController extends BaseController {
 
     /**
      * 신문고 리스트
-     *
      * @return
      */
     @GetMapping("/sinmungo/sinmungo_list.do")
@@ -36,15 +35,15 @@ public class SinmungoController extends BaseController {
 
     /**
      * 신문고 상세 정보
-     *
      * @return
      */
     @GetMapping("/sinmungo/sinmungo_detail.do")
-    public String sinmungo_detail(@RequestParam(value = "idx", required = false) int idx
-            , Model model) {
+    public String sinmungo_detail(@RequestParam(value="idx", required = false) int idx
+    , Model model) {
 
         log.info(String.valueOf(idx));
         model.addAttribute("idx", idx);
+
 
 
         return "sinmungo/sinmungo_detail";
@@ -52,23 +51,21 @@ public class SinmungoController extends BaseController {
 
     /**
      * 신문고 비밀글 여부
-     *
      * @return
      */
     @GetMapping("/sinmungo/sinmungo_secrit_detail.do")
-    public String sinmungo_detail(@RequestParam(value = "idx", required = false) int idx
-            , @RequestParam(value = "secrit", required = false) String secrit
-            , HttpServletRequest request) {
+    public String sinmungo_detail(@RequestParam(value="idx", required = false) int idx
+                                  ,@RequestParam(value="secrit", required = false) String secrit
+                                  ,HttpServletRequest request) {
 
         request.getSession().setAttribute("last_passwd", secrit);
 
 
-        return "redirect:/sinmungo/sinmungo_detail.do?idx=" + idx;
+        return "redirect:/sinmungo/sinmungo_detail.do?idx="+idx;
     }
 
     /**
      * 신문고 글쓰기 - 로그인여부 파악하기
-     *
      * @return
      */
     @GetMapping("/sinmungo/sinmungo_write.do")
@@ -77,7 +74,7 @@ public class SinmungoController extends BaseController {
         String result = "1";        //0 성공, 1 실패
         request.getSession().setAttribute("last_passwd", "0");
 
-        if (request.getSession().getAttribute("member") != null) {
+        if(request.getSession().getAttribute("member") != null) {
             return "sinmungo/sinmungo_write";
         } else {
             return "redirect:/main/login.do";
@@ -86,13 +83,13 @@ public class SinmungoController extends BaseController {
 
 
     @GetMapping("/sinmungo/sinmungo_update.do")
-    public String sinmungo_update(@RequestParam(value = "idx", required = false) String idx,
+    public String sinmungo_update(@RequestParam(value="idx", required = false) String idx,
                                   HttpServletRequest request,
                                   Model model) {
 
         model.addAttribute("idx", String.valueOf(idx));
 
-        if (request.getSession().getAttribute("member") != null) {
+        if(request.getSession().getAttribute("member") != null) {
             return "sinmungo/sinmungo_update";
         } else {
             return "redirect:/main/login.do";

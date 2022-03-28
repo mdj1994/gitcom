@@ -17,12 +17,12 @@
                         </colgroup>
                         <tbody>
                         <tr>
-                            <th scope="row">*지부선택</th>
+                           <!-- <th scope="row">*지부선택</th>
                             <td>
                                 <select class="selectType" id="branch_option">
-                                    <!--                      <option>JS 에서 호출</option>-->
+                                    &lt;!&ndash;                      <option>JS 에서 호출</option>&ndash;&gt;
                                 </select>
-                            </td>
+                            </td>-->
                             <th class="psw">비밀번호</th>
                             <td><input type="text" class="inputType" id="note_passwd" placeholder="비밀번호를 입력해주세요."
                                        style="width: 180px;"></td>
@@ -41,9 +41,9 @@
                     </table>
                 </div>
                 <div class="btn_area">
-                    <div class="btn_left"><a th:href="@{/sinmungo/sinmungo_list.do}" class="btn_list">목록</a></div>
+                    <div class="btn_left"><a th:href="@{/jean/jean_list.do}" class="btn_list">목록</a></div>
                     <div class="btn_right">
-                        <a th:href="@{/sinmungo/sinmungo_list.do}" class="btn_cancel">취소</a>
+                        <a th:href="@{/jean/jean_list.do}" class="btn_cancel">취소</a>
                         <a class="btn_done" id="btn_result">수정완료</a>
                     </div>
                 </div>
@@ -112,10 +112,10 @@
             /* 공개글 / 비공개글 유무 파악 */
             //html문구에서 값 수정으로 비밀글 공유 문제 해결.
             //url로 값 추출 문제 해결
-            const URL = APIURL + '/user/sinmungo/sinmungo_secrit.ajax';
+            const URL = APIURL + '/user/jean/jean_secrit.ajax';
 
             let data = new FormData;
-            data.append("sinmungo_no", [[${idx}]]);
+            data.append("jean_no", [[${idx}]]);
 
 
             $.ajax({
@@ -155,12 +155,12 @@
 
     //상세보기
     function detail_show() {
-        const URL = APIURL+'/user/sinmungo/sinmungo_detail.ajax';
+        const URL = APIURL+'/user/jean/jean_detail.ajax';
 
         let idx = [[${idx}]];
 
         let data = new FormData;
-        data.append("sinmungo_no", idx);
+        data.append("jean_no", idx);
         data.append("publish_passwd", passwd);
 
         let id_check = [[${session?.member?.member_no}]];
@@ -179,7 +179,7 @@
                 console.log(data);
                 if(data.RST_CD == 0) {
                     let result = data.result;
-                    $('#note_no').val(result.sinmungo_no);
+                    $('#note_no').val(result.jean_no);
                     $('#note_title').val(result.title);
                     $('#note_contents').val(result.contents);
                     $('#note_nm').val(result.member_nm);
@@ -187,7 +187,6 @@
                     if(passwd != '0') {
                         $('#note_passwd').val(passwd);
                     }
-                    branch_list(result.sinmungo_branch_no);
 
                     if(data.id_check == 1) {
                         $('#btn_update').show();
@@ -197,7 +196,7 @@
                 }
 
                 else if(data.RST_CD == '-2') {
-                    location.href=[[@{/sinmungo/sinmungo_list.do}]];
+                    location.href=[[@{/jean/jean_list.do}]];
                 }
             },
             error: function (request, status, error) {
@@ -207,31 +206,6 @@
     }
 
 
-    function branch_list(value) {
-        const URL = APIURL + '/user/branch/branch_list.ajax';
-
-        $.ajax({
-            url: URL,
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-                if (data.RST_CD == 0) {
-                    let option = '';
-                    for (var i = 0; i < data.list.length; i++) {
-                        option += '<option value=' + data.list[i].branch_no + '>' + data.list[i].branch_nm + '</option>';
-                    }
-
-                    $('#branch_option').html(option);
-                    $('#branch_option').val(value);
-                }
-                //
-            },
-            error: function (request, status, error) {
-                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
-            }
-        });
-    }
 
     <!-- 작성 완료 클릭 -->
     $('#btn_result').click(function () {
@@ -252,15 +226,14 @@
 
         //data 저장하기
         var data = new FormData();
-        data.append("sinmungo_no",idx);            //게시글 번호
+        data.append("jean_no",idx);            //게시글 번호
         data.append("title", $('#note_title').val());         //제목
         data.append("contents", $('#note_contents').val());    //내용
-        data.append("sinmungo_branch_no", $('#branch_option').val());  //지점번호
         data.append("reg_member_no", [[${session.member.member_no}]]);  //현재 로그인 되어 있는 계정 정보
         data.append("publish_passwd", passwd);         //현재 글, 비밀번호 여부
 
 
-        const URL = APIURL + '/user/sinmungo/sinmungo_update.ajax';
+        const URL = APIURL + '/user/jean/jean_update.ajax';
 
         $.ajax({
             url: URL,
@@ -273,11 +246,11 @@
                 if(data.RST_CD == 0) {
 
                     if(passwd != '') {
-                        location.href = [[@{/sinmungo/sinmungo_secrit_detail.do}]]+'?idx='+idx+'&secrit='+passwd;
+                        location.href = [[@{/jean/jean_secrit_detail.do}]]+'?idx='+idx+'&secrit='+passwd;
                     }
                     else {
                         passwd = 0;
-                        location.href = [[@{/sinmungo/sinmungo_secrit_detail.do}]]+'?idx='+idx+'&secrit='+passwd;
+                        location.href = [[@{/jean/jean_secrit_detail.do}]]+'?idx='+idx+'&secrit='+passwd;
                     }
                 }
             },
