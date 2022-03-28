@@ -3,7 +3,7 @@ package com.union.construction_web.domain;
 import lombok.Data;
 
 @Data
-public class Comment {
+public class Comment extends Member{
 
     /* 댓글관리 */
     
