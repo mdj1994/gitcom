@@ -95,6 +95,5 @@ public class SinmungoController extends BaseController {
             return "redirect:/main/login.do";
         }
 
-
     }
 }
