@@ -12,18 +12,18 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handle) throws  Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handle) throws Exception {
 
         log.info("============= construction_web =============");
-        log.info("Request URI ==>  :"+request.getRequestURI());
+        log.info("Request URI ==>  :" + request.getRequestURI());
         log.info("============================================");
 
         String context = request.getContextPath();  //path 설정 시 값 생성
-        String url = request.getRequestURI().substring(context.length()+1); //해당 url에서 설정된 path 있을 시 제거. +1
+        String url = request.getRequestURI().substring(context.length() + 1); //해당 url에서 설정된 path 있을 시 제거. +1
         String nav = "main";
-        if(!(url.length() <= 1)) {
+        if (!(url.length() <= 1)) {
             System.out.println(url);
-            nav = url.substring(0,url.indexOf("/"));
+            nav = url.substring(0, url.indexOf("/"));
 
         }
         request.setAttribute("nav", nav);

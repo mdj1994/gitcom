@@ -16,6 +16,7 @@ public class OptionController extends BaseController {
 
     /**
      * 신문고 리스트
+     *
      * @return
      */
     @GetMapping("/option/option_list.do")
@@ -26,6 +27,7 @@ public class OptionController extends BaseController {
 
     /**
      * 신문고 상세 정보
+     *
      * @return
      */
     @GetMapping("/option/option_detail.do")

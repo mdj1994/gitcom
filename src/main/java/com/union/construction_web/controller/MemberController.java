@@ -31,7 +31,6 @@ public class MemberController extends BaseController {
     private String API_SERVER;
 
 
-
     @PostMapping("/member/loginAction.do")
     @ResponseBody
     public String loginAction(Member member, HttpServletRequest request) {
@@ -46,7 +45,7 @@ public class MemberController extends BaseController {
             jsonObject = sendPost(API_SERVER + "/user/member/loginAction.ajax", jsonString);
 
             //API 결과값이 0일 경우, 성공
-            if(jsonObject.get("RST_CD").toString().equals("0")) {
+            if (jsonObject.get("RST_CD").toString().equals("0")) {
 
                 JSONObject js = (JSONObject) jsonObject.get("result");
 
@@ -61,8 +60,7 @@ public class MemberController extends BaseController {
                 session.setAttribute("login", true);
 
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -72,6 +70,7 @@ public class MemberController extends BaseController {
 
     /**
      * 회원가입(id, 핸드폰번호 받기)
+     *
      * @return
      */
     @GetMapping("/member/membership01.do")
@@ -82,6 +81,7 @@ public class MemberController extends BaseController {
 
     /**
      * 회원가입2(인증번호 입력받기)
+     *
      * @return
      */
     @GetMapping("/member/membership02.do")
@@ -91,8 +91,7 @@ public class MemberController extends BaseController {
 
             model.addAttribute("result", member);
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("정상적인 방법이 아닙니다.");
         }
 
@@ -101,6 +100,7 @@ public class MemberController extends BaseController {
 
     /**
      * 회원가입2(비밀번호 받기)
+     *
      * @return
      */
     @GetMapping("/member/membership03.do")
@@ -108,14 +108,13 @@ public class MemberController extends BaseController {
 
         try {
 
-            log.info("member_id : "+member.getMember_id());
-            log.info("name : "+member.getMember_nm());
-            log.info("mobile no : "+member.getMobile_no());
+            log.info("member_id : " + member.getMember_id());
+            log.info("name : " + member.getMember_nm());
+            log.info("mobile no : " + member.getMobile_no());
 
             model.addAttribute("result", member);
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -124,6 +123,7 @@ public class MemberController extends BaseController {
 
     /**
      * 회원가입2
+     *
      * @return
      */
     @GetMapping("/member/membership04.do")

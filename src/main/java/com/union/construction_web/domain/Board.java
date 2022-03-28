@@ -3,7 +3,7 @@ package com.union.construction_web.domain;
 import lombok.Data;
 
 @Data
-public class Board extends Member{
+public class Board extends Member {
 
     /* 게시판 공통값 */
     private long board_no;

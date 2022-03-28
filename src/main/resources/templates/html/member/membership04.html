@@ -4,17 +4,17 @@
       layout:decorate="~{layout/default_layout}">
 <th:block layout:fragment="contentFragment">
     <div id="body_container">
-      <div class="body_inner">
-          <div class="subHeader">
-            <h3 class="subTitle joinDone">회원가입</h3>
-            <a href="#" class="btn_back">이전</a>
-          </div>
-          <div class="joinDone_wrap">
-            <h4 class="subTitle02">가입완료</h4>   
-            <p class="txt_info">회원가입이 완료되었습니다.</p>
-            <div class="join_done"><a th:href="@{/main/login.do}" class="btn_goLogin">로그인하기</a></div>
-          </div>
-      </div>
+        <div class="body_inner">
+            <div class="subHeader">
+                <h3 class="subTitle joinDone">회원가입</h3>
+                <a href="#" class="btn_back">이전</a>
+            </div>
+            <div class="joinDone_wrap">
+                <h4 class="subTitle02">가입완료</h4>
+                <p class="txt_info">회원가입이 완료되었습니다.</p>
+                <div class="join_done"><a th:href="@{/main/login.do}" class="btn_goLogin">로그인하기</a></div>
+            </div>
+        </div>
     </div>
 </th:block>
 </html>

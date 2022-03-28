@@ -3,7 +3,7 @@ package com.union.construction_web.domain;
 import lombok.Data;
 
 @Data
-public class Sinmungo extends Board{
+public class Sinmungo extends Board {
 
     /* 신문고 게시판 */
     private long sinmungo_no;           //신문고 번호

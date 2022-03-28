@@ -19,9 +19,10 @@ public class BaseController {
     Logger log = LoggerFactory.getLogger(Serializers.Base.class);
 
     /**
-     * 	POST로 요청
-     *  @return JSONObject
-     *  @Description  URL, JSON형태의 String고 URL에 POST형식으로 요청
+     * POST로 요청
+     *
+     * @return JSONObject
+     * @Description URL, JSON형태의 String고 URL에 POST형식으로 요청
      */
     public JSONObject sendPost(String sendUrl, String jsonValue) {
         JSONObject jsonObj = null;
@@ -31,7 +32,7 @@ public class BaseController {
 
 
         try {
-            log.info(sendUrl+" : POST Connection START");
+            log.info(sendUrl + " : POST Connection START");
 
             //연결 할 URL
             URL url = new URL(sendUrl);
@@ -52,20 +53,20 @@ public class BaseController {
             conn.setReadTimeout(40000);
 
             //URL에 jsonValue을 전송
-            osw = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
+            osw = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
             osw.write(jsonValue.toString());
             osw.flush();
 
 
             //코드를 받음 (성공 : 200,실패 : 404)
             int responseCode = conn.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HttpURLConnection.HTTP_OK) {
                 //DATA를 읽어옴
                 br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                 //읽어온 DATA를 JSON Objcet 형식으로 변환
                 jsonObj = (JSONObject) jsonParser.parse(br);
-            }else {
-                log.error("API 연결 안 됨. CODE : "+responseCode);
+            } else {
+                log.error("API 연결 안 됨. CODE : " + responseCode);
             }
 
 
@@ -79,13 +80,13 @@ public class BaseController {
             log.error(sendUrl + " : ParseException ERROR");
         } finally {
             try {
-                if(osw != null) osw.close();
+                if (osw != null) osw.close();
             } catch (IOException e) {
 //                log.error(e.getMessage());
                 log.error(sendUrl + " : OutputStreamWriter close ERROR ");
             }
             try {
-                if(br != null ) br.close();
+                if (br != null) br.close();
             } catch (IOException e) {
 //                log.error(e.getMessage());
                 log.error(sendUrl + " : BufferedReader close ERROR ");
@@ -96,9 +97,10 @@ public class BaseController {
     }
 
     /**
-     * 	Get로 요청
-     *  @return JSONObject
-     *  @Description  URL, JSON형태의 String고 URL에 POST형식으로 요청
+     * Get로 요청
+     *
+     * @return JSONObject
+     * @Description URL, JSON형태의 String고 URL에 POST형식으로 요청
      */
     public JSONObject sendGet(String sendUrl, String jsonValue) {
         JSONObject jsonObj = null;
@@ -109,7 +111,7 @@ public class BaseController {
 
         try {
 
-            log.info(sendUrl+" : Get CONNECTION START");
+            log.info(sendUrl + " : Get CONNECTION START");
 
             //연결 할 URL
             URL url = new URL(sendUrl);
@@ -120,13 +122,13 @@ public class BaseController {
 
             //코드를 받음 (성공 : 200,실패 : 404)
             int responseCode = conn.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HttpURLConnection.HTTP_OK) {
                 //DATA를 읽어옴
                 br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                 //읽어온 DATA를 JSON Objcet 형식으로 변환
                 jsonObj = (JSONObject) jsonParser.parse(br);
-            }else {
-                log.error("API 연결 안 됨. CODE : "+responseCode);
+            } else {
+                log.error("API 연결 안 됨. CODE : " + responseCode);
             }
 
 
@@ -140,13 +142,13 @@ public class BaseController {
             log.error(sendUrl + " : ParseException ERROR");
         } finally {
             try {
-                if(osw != null) osw.close();
+                if (osw != null) osw.close();
             } catch (IOException e) {
 //                log.error(e.getMessage());
                 log.error(sendUrl + " : OutputStreamWriter close ERROR ");
             }
             try {
-                if(br != null ) br.close();
+                if (br != null) br.close();
             } catch (IOException e) {
 //                log.error(e.getMessage());
                 log.error(sendUrl + " : BufferedReader close ERROR ");
