@@ -44,6 +44,7 @@ public class JeanController extends BaseController {
         return "jean/jean_detail";
     }
 
+
     /**
      * 공개제안 비밀글 여부
      *
