@@ -16,8 +16,6 @@ public class JeanController extends BaseController {
 
     Logger log = LoggerFactory.getLogger(this.getClass());
 
-    ObjectMapper objectMapper = new ObjectMapper();
-
 
     /**
      * 공개제안 리스트
