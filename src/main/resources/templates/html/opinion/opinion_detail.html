@@ -7,7 +7,7 @@
         <div class="body_inner">
             <div class="sub01_detail">
                 <div class="header">
-                    <h3 class="title"><span id="note_no">341</span>. <span id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span> </h3>
+                    <h3 class="title"><span id="note_no"></span>. <span id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span> </h3>
                     <div class="writerNdate">
                         <span class="writer">작성자</span>
                         <span class="name" id="note_nm">관리자</span>
@@ -40,6 +40,7 @@
         </div>
     </div>
 
+
     <!-- popup창 생성시, 배경 검정색으로 만들기 -->
     <div class="dimmed" style="display:none"></div>
     <!-- s: popup 투표하기 -->
@@ -51,13 +52,13 @@
                     <h3>주제</h3>
                     <p class="poll_title">경기지부 행정 투명 운영을 위한 감시단 발족의 건</p>
                     <p class="poll_notice">아래에서 선택하세요.<br>투표가 완료되면 수정이 불가하니 신중히 선택하시기 바랍니다. </p>
-                    <ul class="poll_list">
+                    <ul class="poll_list" id="voting_menu">
+                        <!--<li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
                         <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
                         <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
                         <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
                         <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
-                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
-                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
+                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>-->
                     </ul>
                     <h4>기타의견</h4>
                     <div class="textarea">
@@ -134,7 +135,7 @@
                 console.log(data);
                 if(data.RST_CD == 0) {
                     let result = data.result;
-                    $('#note_no').html(result.sinmungo_no);
+                    $('#note_no').html(result.opinion_no);
                     $('#note_title').html(result.title);
                     $('#note_contents').html(result.contents);
                     $('#note_topic').text(result.topic);        //상세 페이지 주제
@@ -142,6 +143,22 @@
                     $('#note_nm').html(result.member_nm);
                     $('#note_date').html(result.reg_date);
 
+
+                    //투표 항목 불러오기
+                    if(data.RST_VT > 0) {
+
+                        let voting_arr = '';
+                        for(var i = 0; i < data.voting.length; i++) {
+                            voting_arr +='<li><label class="radioBox1"><input type="radio" name="poll"> <span>'+data.voting[i].poll_item_title+'</span></label></li>'
+                        }
+
+                        $('#voting_menu').html(voting_arr);
+                    } else {
+
+                    }
+
+
+                    //보류
                     if(data.id_check == 1) {
                         $('#btn_update').show();
                     } else if(data.id_check == 2) {
@@ -158,6 +175,9 @@
             }
         });
     });
+
+    
+
 
     <!--투표하기버튼 클릭 -->
     $('#button_active').click(function () {
