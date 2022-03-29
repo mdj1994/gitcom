@@ -53,6 +53,7 @@ public class MemberController extends BaseController {
                 //log.info(jsonObject.get("result").toString());
                 member.setMember_no(Integer.valueOf(js.get("member_no").toString()));
                 member.setMember_nm(js.get("member_nm").toString());
+                member.setMobile_no(js.get("mobile_no").toString());
 
 
                 HttpSession session = request.getSession();

@@ -27,7 +27,7 @@
                     <div class="subject_wrap">
                         <p class="subject">주제</p>
                         <p class="title" id="note_topic">경기지부 행정 투명 운영을 위한 감시단 발족의 건</p>
-                        <button class="btn_poll" id="button_active"><span>투표하기</span></button>
+                        <button class="btn_poll" style="display: none" id="button_active"><span>투표하기</span></button>
                         <button class="btn_result" id="button_result"><span>결과보기</span></button>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
     <!-- e: popup -->
 
     <!-- s: popup 투표 결과-->
-    <!--<div class="dimmed"></div> -->
+<!--    <div class="dimmed"></div>-->
     <div class="pollPopup_wrap" id="popup_result" style="display:none">
         <div class="pollPopup_inner">
             <h2 class="pHeader">투표결과</h2>
@@ -111,11 +111,17 @@
 
     const APIURL = [[${@environment.getProperty('API_SERVER')}]];
     const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+    let VT_CNT = -1;
 
 
 
     //제일 처음 실행
     $(document).ready(function () {
+
+        //투표하기 버튼 생성하기 session이 있을 경우에만
+        if([[${session?.member?.member_id}]] != null) {
+            $('#button_active').show();
+        }
 
         const URL = APIURL + '/user/opinion/opinion_detail.ajax';
 
@@ -144,12 +150,14 @@
                     $('#note_date').html(result.reg_date);
 
 
+                    VT_CNT = data.RST_VT;       //투표 개수 수정하기
+
                     //투표 항목 불러오기
                     if(data.RST_VT > 0) {
 
                         let voting_arr = '';
                         for(var i = 0; i < data.voting.length; i++) {
-                            voting_arr +='<li><label class="radioBox1"><input type="radio" name="poll"> <span>'+data.voting[i].poll_item_title+'</span></label></li>'
+                            voting_arr +='<li><label class="radioBox1"><input type="radio" name="poll" value="'+data.voting[i].poll_item_no+'"> <span>'+data.voting[i].poll_item_title+'</span></label></li>'
                         }
 
                         $('#voting_menu').html(voting_arr);
@@ -187,6 +195,11 @@
 
     <!-- 투표결과 버튼 클릭 -->
     $('#button_result').click(function () {
+
+
+
+
+
         $('#popup_result').show();
         $('.dimmed').show();
     });
@@ -195,10 +208,55 @@
     <!-- 투표하기 popup창 완료 버튼 -->
     $('#item_submit').click(function () {
 
-        $('#poll_text').val();
+        let poll_text = $('#poll_text').val();
 
-        $('#popup_active').hide();
-        $('.dimmed').hide();
+        //의견 30자 넘기지 말기
+        if(poll_text > 30) {
+            alert('글자 수 초과');
+            $('#poll_text').focus;  //text box 지정
+            return;
+        } else if(VT_CNT == 0 && poll_text.length == 0) {
+            alert('주관식 입력 안 함');
+            return;
+        }
+
+        var radionValue = $('input[name=poll]').val();
+        if(radionValue == null && VT_CNT > 0) {
+            alert('선택 안함');
+            return;
+        } else if(VT_CNT < 0 ) {
+            alert('error');
+            return ;
+        }
+
+        const URL = APIURL+"/user/opinion/poll_result_insert.ajax";
+
+        //data 가져오기
+        var data = new FormData();
+        data.append('poll_item_no', radionValue);
+        data.append('opinion_no', [[${idx}]]);
+        data.append('etc_opinion', poll_text);
+        data.append('member_nm', [[${session?.member?.member_nm}]]);
+        data.append('member_id', [[${session?.member?.member_id}]]);
+        data.append('mobile_no', [[${session?.member?.mobile_no}]]);
+
+        $.ajax({
+            url : URL,
+            data : data,
+            type : 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                console.log(data);
+
+            }
+        });
+
+
+
+        $('#popup_active').hide();  //popup창 닫기
+        $('.dimmed').hide();        //배경 까만색 없애기
     });
 
     $('#item_cance').click(function () {
