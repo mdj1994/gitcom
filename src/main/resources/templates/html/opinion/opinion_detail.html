@@ -62,7 +62,7 @@
                     </ul>
                     <h4>기타의견</h4>
                     <div class="textarea">
-                        <textarea rows="10" cols="50" placeholder="30자이내로 작성해주세요."></textarea>
+                        <textarea rows="10" cols="50" id="poll_text" placeholder="30자이내로 작성해주세요."></textarea>
                     </div>
                     <div class="btn_wrap">
                         <a href="#" class="btn_cancel" id="item_cance">취소</a>
@@ -194,6 +194,9 @@
 
     <!-- 투표하기 popup창 완료 버튼 -->
     $('#item_submit').click(function () {
+
+        $('#poll_text').val();
+
         $('#popup_active').hide();
         $('.dimmed').hide();
     });
