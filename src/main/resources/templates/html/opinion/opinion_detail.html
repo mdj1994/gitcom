@@ -85,18 +85,16 @@
                     <h3>주제</h3>
                     <p class="poll_title">경기지부 행정 투명 운영을 위한 감시단 발족의 건</p>
                     <h4>투표 결과</h4>
-                    <p class="poll_txt">찬성</p>
+                    <p class="poll_txt" id="result_value"><!--결과 TITLE--></p>
                     <ul class="pollResult_list" id="result_voting">
-                        <li class="win"><span class="txt">찬성</span><span class="result"><strong>1,518</strong>표<span>(55%)</span></span>
-                        </li>
+                        <!--<li class="win"><span class="txt">찬성</span><span class="result"><strong>1,518</strong>표<span>(55%)</span></span></li>
+                        <li><span class="txt">찬성</span><span class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
                         <li><span class="txt">찬성</span><span
                                 class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
                         <li><span class="txt">찬성</span><span
                                 class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
                         <li><span class="txt">찬성</span><span
-                                class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
-                        <li><span class="txt">찬성</span><span
-                                class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
+                                class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>-->
                     </ul>
                     <div class="btn_wrap">
                         <a href="#" class="btn_cancel" id="item_result">확인</a>
@@ -113,15 +111,20 @@
     const APIURL = [[${@environment.getProperty('API_SERVER')}]];
     const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
     let VT_CNT = -1;
+    let member_idx = [[${session?.member?.member_no}]]; //회원 정보
 
 
     //제일 처음 실행
     $(document).ready(function () {
 
-        //투표하기 버튼 생성하기 session이 있을 경우에만
-        if ([[${session?.member?.member_id}]] != null) {
-            $('#button_active').show();
-        }
+
+        showDetail();
+    });
+
+
+
+    //화면에 필요한 데이터 모두 출력하기
+    function showDetail() {
 
         const URL = APIURL + '/user/opinion/opinion_detail.ajax';
 
@@ -129,6 +132,11 @@
 
         let data = new FormData;
         data.append("opinion_no", idx);
+
+
+        if(member_idx != null) {
+            data.append("member_no", member_idx);
+        }
 
         $.ajax({
             url: URL,
@@ -138,7 +146,9 @@
             contentType: false,
             processData: false,
             success: function (data) {
+
                 console.log(data);
+
                 if (data.RST_CD == 0) {
                     let result = data.result;
                     $('#note_no').html(result.opinion_no);
@@ -150,14 +160,22 @@
                     $('#note_date').html(result.reg_date);
 
 
+                    if(data.result.board_count != 0 ) {
+                        $('#button_active').hide();
+                    } else {
+                        $('#button_active').show();
+                    }
+
                     VT_CNT = data.RST_VT;       //투표 개수 수정하기
+
 
                     //투표 항목 불러오기
                     if (data.RST_VT > 0) {
 
                         let voting_arr = '';
                         for (var i = 0; i < data.voting.length; i++) {
-                            voting_arr += '<li><label class="radioBox1"><input type="radio" name="poll" value="' + data.voting[i].poll_item_no + '"> <span>' + data.voting[i].poll_item_title + '</span></label></li>'
+                            voting_arr += '<li><label class="radioBox1"><input type="radio" name="poll" value="' + data.voting[i].poll_item_no + '"> <span>' +
+                                data.voting[i].poll_item_no +' : '+ data.voting[i].poll_item_title + '</span></label></li>'
                         }
 
                         $('#voting_menu').html(voting_arr);
@@ -181,22 +199,40 @@
                 console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
             }
         });
-    });
+    }
+
 
 
     <!--투표하기버튼 클릭 -->
     $('#button_active').click(function () {
-        $('#popup_active').css('display', 'flex');
-        $('.dimmed').show();
+        //투표하기 버튼 생성하기 session이 있을 경우에만
+        if ([[${session?.member?.member_id}]] == null) {
+            alert('로그인 먼저 해주세요.');
+            return;
+        } else {
+            $('#popup_active').css('display', 'flex');
+            $('.dimmed').show();
+
+        }
     });
 
     <!-- 투표결과 버튼 클릭 -->
     $('#button_result').click(function () {
 
+        result_view();
+    });
+
+    //투표결과 function
+    function result_view() {
         const URL = APIURL + '/user/opinion/Poll_resultView.ajax';
 
         var data = new FormData();
         data.append("opinion_no", [[${idx}]]);
+
+        if(member_idx != null) {
+            console.log('member_no : '+ member_idx);
+            data.append("member_no", member_idx);
+        }
 
         $.ajax({
             url: URL,
@@ -207,11 +243,17 @@
             processData: false,
             success: function (data) {
                 console.log(data);
+                let resultCnt = data.result_poll;
                 //list 있음.
                 if (data.RST_CD == 0) {
                     let arr_result ='';
                     for(var i =0; i < data.result.length; i++) {
-                        arr_result += '<li class="win">';
+                        if(data.result[i].poll_item_no == resultCnt) {
+                            arr_result += '<li class="win">';
+                            $('#result_value').html(data.result_value);
+                        } else {
+                            arr_result += '<li>';
+                        }
                         arr_result += '<span class="txt">'+data.result[i].poll_item_title+'</span>';
                         arr_result += '<span class="result">';
                         arr_result += '<strong>'+data.result[i].poll_item_count+'</strong>표';
@@ -234,7 +276,7 @@
 
         $('#popup_result').show();
         $('.dimmed').show();
-    });
+    }
 
 
     <!-- 투표하기 popup창 완료 버튼 -->
@@ -252,7 +294,8 @@
             return;
         }
 
-        var radionValue = $('input[name=poll]').val();
+        var radionValue = $('input[name=poll]:checked').val();
+        console.log(radionValue);
         if (radionValue == null && VT_CNT > 0) {
             alert('선택 안함');
             return;
@@ -281,6 +324,14 @@
             processData: false,
             success: function (data) {
                 console.log(data);
+                if(data.RST_CD == 0) {
+
+                    $('#popup_active').hide();  //popup창 닫기
+                    $('.dimmed').hide();        //배경 까만색 없애기
+                    result_view();  //결과창 보여주기
+
+                    return;
+                }
 
             },
             error: function (request, status, error) {
@@ -298,7 +349,7 @@
         $('.dimmed').hide();
     })
 
-    <!-- 투표결과 popup창 확인 버튼 -->
+    //투표결과 popup창 확인 버튼
     $('#item_result').click(function () {
         $('#popup_result').hide();
         $('.dimmed').hide();

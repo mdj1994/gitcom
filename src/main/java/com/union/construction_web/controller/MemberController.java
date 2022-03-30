@@ -44,11 +44,14 @@ public class MemberController extends BaseController {
             //API 호출로 값 가져오기
             jsonObject = sendPost(API_SERVER + "/user/member/loginAction.ajax", jsonString);
 
+            log.info(jsonObject.toString());
+
             //API 결과값이 0일 경우, 성공
             if (jsonObject.get("RST_CD").toString().equals("0")) {
 
                 JSONObject js = (JSONObject) jsonObject.get("result");
 
+                log.info(js.toString());
                 //data 옮기기
                 //log.info(jsonObject.get("result").toString());
                 member.setMember_no(Integer.valueOf(js.get("member_no").toString()));
