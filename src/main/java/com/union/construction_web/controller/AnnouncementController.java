@@ -3,7 +3,6 @@ package com.union.construction_web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -16,7 +15,7 @@ public class AnnouncementController extends BaseController {
 
 
     /**
-     * 공개제안 글 목록
+     * 공지사항 글 목록
      *
      * @return
      */
@@ -27,6 +26,11 @@ public class AnnouncementController extends BaseController {
         return "announcement/announcement_list";
     }
 
+
+    /**
+     * 공지사항 detail
+     * @return
+     */
     @GetMapping("/announcement/announcement_detail.do")
     public String announcement_detail() {
 

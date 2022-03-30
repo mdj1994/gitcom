@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
+
+
 <th:block layout:fragment="contentFragment">
     <div id="body_container">
         <div class="body_inner">
@@ -34,7 +36,7 @@
                 </div>
                 <div class="btn_wrap">
                     <div class="btn_area">
-                        <a href="#" class="btn_list"><span>목록</span></a>
+                        <a th:href="@{/main/main.do}" class="btn_list"><span>목록</span></a>
                     </div>
                 </div>
             </div>
@@ -159,10 +161,15 @@
                     $('#note_nm').html(result.member_nm);
                     $('#note_date').html(result.reg_date);
 
-
-                    if(data.result.board_count != 0 ) {
+                    console.log("count : "+data.result.board_count);
+                    console.log("result : "+result.poll_from_date);
+                    //투표 했는지, 기간 지났는지 체크
+                    if(data.result.board_count != 0) {
                         $('#button_active').hide();
-                    } else {
+                    } else if (result.poll_from_date == 0) {
+                        $('#putton_active').hide();
+                    }
+                    else {
                         $('#button_active').show();
                     }
 
@@ -180,7 +187,7 @@
 
                         $('#voting_menu').html(voting_arr);
                     } else {
-
+                        $('#voting_menu').hide();
                     }
 
 
@@ -326,6 +333,7 @@
                 console.log(data);
                 if(data.RST_CD == 0) {
 
+                    $('#putton_active').hide(); //투표하기 버튼 없애기
                     $('#popup_active').hide();  //popup창 닫기
                     $('.dimmed').hide();        //배경 까만색 없애기
                     result_view();  //결과창 보여주기
