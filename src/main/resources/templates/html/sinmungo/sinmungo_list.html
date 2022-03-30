@@ -198,7 +198,7 @@
             processData: false,
             success: function (data) {
                 if (data.RST_CD == '0') {
-
+                    console.log(data.result);
                     let arr = '';
                     let list = data.result;
                     for (var i = 0; i < list.length; i++) {
@@ -212,7 +212,8 @@
                         }
 
                         arr += '</td>';
-                        arr += '<td class="write">' + list[i].member_nm + '</td>';
+                        arr += '<td class="writer">' + list[i].member_nm;
+                        arr += ' ('+list[i].branch_nm+' | KICT)</td>';
                         arr += '<td class="date">' + list[i].reg_date + '</td>';
                         arr += '<td class="state">';
                         if (list[i].proc_state == '0') {
@@ -220,7 +221,7 @@
                         } else {
                             arr += '<span class="done">' + '완료' + '</span></td>';
                         }
-                        arr += '<td class="rcd"><span>' + 'no' + '</span>';
+                        arr += '<td class="rcd"><span>' + list[i].board_count + '</span>';
                         arr += '</tr>';
                     }
 

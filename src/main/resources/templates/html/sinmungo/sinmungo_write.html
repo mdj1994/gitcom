@@ -147,13 +147,9 @@
                 if (data.RST_CD == 0) {
 
                     if (passwd != '') {
-                        location.href = [[@{/sinmungo/sinmungo_secrit_detail.do
-                    }]]
-                        +'?idx=' + data.last_idx + '&secrit=' + passwd;
+                        location.href = [[@{/sinmungo/sinmungo_secrit_detail.do}]]+'?idx=' + data.last_idx + '&secrit=' + passwd;
                     } else {
-                        location.href = [[@{/sinmungo/sinmungo_detail.do
-                    }]]
-                        +'?idx=' + data.last_idx;
+                        location.href = [[@{/sinmungo/sinmungo_secrit_detail.do}]]+'?idx=' + data.last_idx + '&secrit=0';
                     }
                 }
             },
