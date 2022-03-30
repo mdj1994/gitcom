@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
+
+
 <th:block layout:fragment="contentFragment">
     <div id="body_container">
         <div class="body_inner">
@@ -16,7 +18,7 @@
                         <col>
                         <col style="width: 15%">
                         <col style="width: 10%">
-                        <col style="width: 5%">
+<!--                        <col style="width: 5%">-->
                         <col style="width: 10%">
                     </colgroup>
                     <thead>
@@ -29,7 +31,7 @@
                         <th scope="col">추천</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="body_list">
                     <tr>
                         <td class="no" scope="row">999</td>
                         <td class="title"><a href="#">2022년도 건설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업
@@ -150,6 +152,9 @@
 </th:block>
 <script layout:fragment="javascript" th:inline="javascript">
 
+    const APIURL = [[${@environment.getProperty('API_SERVER')}]];
+    const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+
     $(document).ready(function() {
 
         selectList('1');
@@ -158,7 +163,7 @@
 
     <!-- List 불러오기 -->
     function selectList(num) {
-        const URL = APIURL + '/user/opinion/opinion_list.ajax';
+        const URL = APIURL + '/user/announcement/announcement_list.ajax';
 
         let data = new FormData();
 
@@ -178,13 +183,14 @@
                     let list = data.result;
                     for (var i = 0; i < list.length; i++) {
                         arr += '<tr>';
-                        arr += '<td class="no" scope="row">' + list[i].opinion_no + '</td>';
-                        arr += '<td class="title" onclick="detail_move(' + list[i].opinion_no + ')">' + list[i].title;
+                        arr += '<td class="no" scope="row">' + list[i].announcement_no + '</td>';
+                        arr += '<td class="title" onclick="detail_move(' + list[i].announcement_no + ')">' + list[i].title;
 
                         arr += '</td>';
-                        arr += '<td class="write">' + list[i].member_nm + '</td>';
+                        arr += '<td class="writer">' + list[i].member_nm;
+                        arr += ' ('+list[i].branch_nm+' | KICT)</td>';
                         arr += '<td class="date">' + list[i].reg_date + '</td>';
-                        arr += '<td class="rcd"><span>' + 'no' + '</span>';
+                        arr += '<td class="rcd"><span>' + list[i].board_count + '</span>';
                         arr += '</tr>';
                     }
 
@@ -198,6 +204,12 @@
                 console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
             }
         });
+    }
+
+    <!-- detail 이동 -->
+    function detail_move(num) {
+
+        location.href = [[@{/announcement/announcement_detail.do}]]+'?idx='+num;
     }
 </script>
 </html>
