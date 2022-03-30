@@ -16,7 +16,7 @@
                     </div>
                     <div class="rcd">
                         <span class="tit">추천수</span>
-                        <strong class="no">9,999</strong>
+                        <strong class="no" id="board_count">9,999</strong>
                     </div>
                 </div>
                 <div class="content" id="note_contents">
@@ -219,6 +219,8 @@
                     $('#note_contents').html(result.contents);
                     $('#note_nm').html(result.member_nm);
                     $('#note_date').html(result.reg_date);
+                    $('#branch_nm').html('('+result.branch_nm+' | KICT)');  //지부 설정
+                    $('#board_count').html(result.board_count);     //추천수
 
                     if (data.id_check == 1) {
                         $('#btn_update').show();

@@ -56,6 +56,8 @@ public class JeanController extends BaseController {
             , HttpServletRequest request) {
 
         request.getSession().setAttribute("last_passwd", secrit);
+        log.info("idx : "+idx);
+        request.setAttribute("idx", idx);
 
 
         return "redirect:/jean/jean_detail.do?idx=" + idx;

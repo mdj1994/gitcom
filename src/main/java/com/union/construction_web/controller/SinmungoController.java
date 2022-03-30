@@ -59,7 +59,9 @@ public class SinmungoController extends BaseController {
                                   ,HttpServletRequest request) {
 
         request.getSession().setAttribute("last_passwd", secrit);
+        request.setAttribute("idx", idx);
 
+        log.info("idx : "+idx);
 
         return "redirect:/sinmungo/sinmungo_detail.do?idx="+idx;
     }
