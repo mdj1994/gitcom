@@ -4,142 +4,120 @@
       layout:decorate="~{layout/default_layout}">
 <th:block layout:fragment="contentFragment">
     <div id="body_container">
-        <div class="body_inner">
-            <div class="sub01_detail">
-                <div class="header">
-                    <h3 class="title">341. 공공기관 공모전의 투명한 운영을 위한 제안합니다. </h3>
-                    <div class="writerNdate">
-                        <span class="writer">작성자</span>
-                        <span class="name">관리자</span>
-                        <span class="date">2022-03-31</span>
-                    </div>
-                    <div class="rcd">
-                        <span class="tit">추천수</span>
-                        <strong class="no">9,999</strong>
-                    </div>
+      <div class="body_inner">
+        <div class="sub01_detail">
+            <div class="header">
+                <h3 class="title"><span id="note_no">341</span>. <span id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span> </h3>
+                <div class="writerNdate">
+                    <span class="writer">작성자</span>
+                    <span class="name"><span id="note_nm">홍길동</span> <span id="branch_nm">(경기지부 | KICT)</span></span>
+                    <span class="date" id="note_date">2022-03-31</span>
                 </div>
-                <div class="content">
-                    <p class="adminText">
-                        경기지부 행정 운영의 투명성을 증대하기 위해 시민 참여단을 모집하는데에 따른 경기지부 여러분들의 의견을 듣습니다.<br>
-                        아래 찬반투표를 통해 의견을 남겨주세요.<br>
-                        *투표는 모두 익명으로 진행됩니다.
-                    </p>
-                    <div class="subject_wrap">
-                        <p class="subject">주제</p>
-                        <p class="title">경기지부 행정 투명 운영을 위한 감시단 발족의 건</p>
-                        <button class="btn_poll" id="button_active"><span>투표하기</span></button>
-                        <button class="btn_result" id="button_result"><span>결과보기</span></button>
-                    </div>
+                <div class="rcd">
+                    <span class="tit">추천수</span>
+                    <strong class="no" id="good_count">9,999</strong>
                 </div>
+            </div>
+            <div class="content" id="note_contents">
+                <ol>
+                    <li>1. 정부는 관계부처 합동으로 「건설현장 불법행위 TF」를 구성(’21.10월)하고 집중감독을 실시(’21.10월~12월)한 결과, 불법행위자의 체포·구속, 과태료 부과, 
+                        시정조치 등 현장 불법행위에 대해 엄정 조치를 취하였습니다.</li>
+                    <li>2. 이와 관련하여 정부의 주요 조치 사례와 채용절차법상 채용강요 금지 조항(법 제4조의2) 구체화 지침을 붙임과 같이 알려드리니 피해사례 발생시 국토부 내 「건설현장
+                        채용질서 신고센터」를 적극 활용하고 현장 불법행위에 대응할 수 있도록 참고하여 주시기 바랍니다.</li>
+                </ol>
+                <div class="add">
+                    붙 임<a href="#"> 1. 건설현장 불법행위 정부 조치 사례 및 지침 1부.</a><br>
+                    <a href="#">2. 「건설현장 채용질서 신고센터」 관련 자료 1부</a> 끝.
+                </div>
+            </div> 
+
                 <div class="btn_wrap">
                     <div class="btn_area">
-                        <a href="#" class="btn_list"><span>목록</span></a>
+                        <a th:href="@{/announcement/announcement_list.do}" class="btn_list"><span>목록</span></a>
+                    </div>
+                    <div class="good">
+                        <button type="button" style="display: none" id="btn_good">추천</button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 
-    <!-- popup창 생성시, 배경 검정색으로 만들기 -->
-    <div class="dimmed" style="display:none"></div>
-    <!-- s: popup 투표하기 -->
-    <div class="pollPopup_wrap" id="popup_active" style="display:none">
-        <div class="pollPopup_inner">
-            <h2 class="pHeader">투표하기</h2>
+    <!-- 비밀글 열었을 경우 popup창 생성 -->
+    <!-- s: pwd -->
+    <div class="popup_wrap" style="display:none;" id="popup_secret">
+        <div class="msgPopup_wrap">
+            <h2 class="pHeader">알림</h2>
             <div class="pBody">
-                <div class="poll_wrap">
-                    <h3>주제</h3>
-                    <p class="poll_title">경기지부 행정 투명 운영을 위한 감시단 발족의 건</p>
-                    <p class="poll_notice">아래에서 선택하세요.<br>투표가 완료되면 수정이 불가하니 신중히 선택하시기 바랍니다. </p>
-                    <ul class="poll_list">
-                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
-                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
-                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
-                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
-                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
-                        <li><label class="radioBox1"><input type="radio" name="poll"> <span>찬성</span></label></li>
-                    </ul>
-                    <h4>기타의견</h4>
-                    <div class="textarea">
-                        <textarea rows="10" cols="50" placeholder="30자이내로 작성해주세요."></textarea>
-                    </div>
-                    <div class="btn_wrap">
-                        <a href="#" class="btn_cancel" id="item_cance">취소</a>
-                        <a href="#" class="btn_done" id="item_submit">완료</a>
-                    </div>
+                <div class="pwdEntry">
+                    <p>비밀번호를 입력해주세요.</p>
+                    <input type="text" class="entry" id="secrit_text"/>
                 </div>
+                <button type="button" class="btn_type01" id="btn_pop_result">확인</button>
             </div>
         </div>
     </div>
-    <!-- e: popup -->
+    <!-- e: pwd -->
 
-    <!-- s: popup 투표 결과-->
-    <!--<div class="dimmed"></div> -->
-    <div class="pollPopup_wrap" id="popup_result" style="display:none">
-        <div class="pollPopup_inner">
-            <h2 class="pHeader">투표결과</h2>
-            <div class="pBody">
-                <div class="pollResult_wrap">
-                    <h3>주제</h3>
-                    <p class="poll_title">경기지부 행정 투명 운영을 위한 감시단 발족의 건</p>
-                    <h4>투표 결과</h4>
-                    <p class="poll_txt">찬성</p>
-                    <ul class="pollResult_list">
-                        <li class="win"><span class="txt">찬성</span><span class="result"><strong>1,518</strong>표<span>(55%)</span></span>
-                        </li>
-                        <li><span class="txt">찬성</span><span
-                                class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
-                        <li><span class="txt">찬성</span><span
-                                class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
-                        <li><span class="txt">찬성</span><span
-                                class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
-                        <li><span class="txt">찬성</span><span
-                                class="result"><strong>1,508</strong>표<span>(55%)</span></span></li>
-                    </ul>
-                    <div class="btn_wrap">
-                        <a href="#" class="btn_cancel" id="item_result">확인</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- e: popup -->
 
 </th:block>
-<script layout:fragment="javascript">
+<script layout:fragment="javascript" th:inline="javascript">
 
-    <!--
-    투표하기
-    버튼
-    클릭 -->
-    $('#button_active').click(function () {
-        $('#popup_active').css('display', 'flex');
-        $('.dimmed').show();
-    });
+    const APIURL = [[${@environment.getProperty('API_SERVER')}]];
+    const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+    let passwd = '';
 
-    <!-- 투표결과 버튼 클릭 -->
-    $('#button_result').click(function () {
-        $('#popup_result').show();
-        $('.dimmed').show();
+    //제일 처음 실행
+    $(document).ready(function () {
+
+        detail_show(); //상세 보기
+
+
     });
 
 
-    <!-- 투표하기 popup창 완료 버튼 -->
-    $('#item_submit').click(function () {
-        $('#popup_active').hide();
-        $('.dimmed').hide();
-    });
+    //상세보기
+    function detail_show() {
+        const URL = APIURL + '/user/announcement/announcement_detail.ajax';
 
-    $('#item_cance').click(function () {
-        $('#popup_active').hide();
-        $('.dimmed').hide();
-    })
+        let idx = [[${idx}]];
+        console.log(idx);
 
-    <!-- 투표결과 popup창 확인 버튼 -->
-    $('#item_result').click(function () {
-        $('#popup_result').hide();
-        $('.dimmed').hide();
-    })
+        let data = new FormData;
+        data.append("announcement_no", idx);
 
+        let id_check = [[${session?.member?.member_no}]];
+        if (id_check != null) {
+            data.append("no", id_check);
+        }
+
+        $.ajax({
+            url : URL,
+            data : data,
+            type : 'post',
+            dataType : 'json',
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                console.log(data);
+                if(data.RST_CD == 0) {
+                    let result = data.result;
+                    $('#note_no').html(result.announcement_no);
+                    $('#note_title').html(result.title);
+                    $('#note_contents').html(result.contents);
+                    $('#note_nm').html(result.member_nm);
+                    $('#branch_nm').html('('+result.branch_nm+' | KICT)');
+                    $('#note_date').html(result.reg_date);
+                    $('#good_count').html(result.board_count);
+
+                }
+
+            },
+            error: function (request, status, error) {
+                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        });
+    }
 </script>
 </html>
