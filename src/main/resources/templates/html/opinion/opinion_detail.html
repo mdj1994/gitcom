@@ -7,7 +7,8 @@
         <div class="body_inner">
             <div class="sub01_detail">
                 <div class="header">
-                    <h3 class="title"><span id="note_no"></span>. <span id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span> </h3>
+                    <h3 class="title"><span id="note_no"></span>. <span
+                            id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span></h3>
                     <div class="writerNdate">
                         <span class="writer">작성자</span>
                         <span class="name" id="note_nm">관리자</span>
@@ -19,7 +20,7 @@
                     </div>
                 </div>
                 <div class="content">
-                    <p class="adminText"  id="note_contents">
+                    <p class="adminText" id="note_contents">
                         경기지부 행정 운영의 투명성을 증대하기 위해 시민 참여단을 모집하는데에 따른 경기지부 여러분들의 의견을 듣습니다.<br>
                         아래 찬반투표를 통해 의견을 남겨주세요.<br>
                         *투표는 모두 익명으로 진행됩니다.
@@ -75,7 +76,7 @@
     <!-- e: popup -->
 
     <!-- s: popup 투표 결과-->
-<!--    <div class="dimmed"></div>-->
+    <!--    <div class="dimmed"></div>-->
     <div class="pollPopup_wrap" id="popup_result" style="display:none">
         <div class="pollPopup_inner">
             <h2 class="pHeader">투표결과</h2>
@@ -85,7 +86,7 @@
                     <p class="poll_title">경기지부 행정 투명 운영을 위한 감시단 발족의 건</p>
                     <h4>투표 결과</h4>
                     <p class="poll_txt">찬성</p>
-                    <ul class="pollResult_list">
+                    <ul class="pollResult_list" id="result_voting">
                         <li class="win"><span class="txt">찬성</span><span class="result"><strong>1,518</strong>표<span>(55%)</span></span>
                         </li>
                         <li><span class="txt">찬성</span><span
@@ -114,12 +115,11 @@
     let VT_CNT = -1;
 
 
-
     //제일 처음 실행
     $(document).ready(function () {
 
         //투표하기 버튼 생성하기 session이 있을 경우에만
-        if([[${session?.member?.member_id}]] != null) {
+        if ([[${session?.member?.member_id}]] != null) {
             $('#button_active').show();
         }
 
@@ -131,15 +131,15 @@
         data.append("opinion_no", idx);
 
         $.ajax({
-            url : URL,
-            data : data,
-            type : 'post',
-            dataType : 'json',
+            url: URL,
+            data: data,
+            type: 'post',
+            dataType: 'json',
             contentType: false,
             processData: false,
-            success : function(data) {
+            success: function (data) {
                 console.log(data);
-                if(data.RST_CD == 0) {
+                if (data.RST_CD == 0) {
                     let result = data.result;
                     $('#note_no').html(result.opinion_no);
                     $('#note_title').html(result.title);
@@ -153,11 +153,11 @@
                     VT_CNT = data.RST_VT;       //투표 개수 수정하기
 
                     //투표 항목 불러오기
-                    if(data.RST_VT > 0) {
+                    if (data.RST_VT > 0) {
 
                         let voting_arr = '';
-                        for(var i = 0; i < data.voting.length; i++) {
-                            voting_arr +='<li><label class="radioBox1"><input type="radio" name="poll" value="'+data.voting[i].poll_item_no+'"> <span>'+data.voting[i].poll_item_title+'</span></label></li>'
+                        for (var i = 0; i < data.voting.length; i++) {
+                            voting_arr += '<li><label class="radioBox1"><input type="radio" name="poll" value="' + data.voting[i].poll_item_no + '"> <span>' + data.voting[i].poll_item_title + '</span></label></li>'
                         }
 
                         $('#voting_menu').html(voting_arr);
@@ -167,15 +167,14 @@
 
 
                     //보류
-                    if(data.id_check == 1) {
+                    if (data.id_check == 1) {
                         $('#btn_update').show();
-                    } else if(data.id_check == 2) {
+                    } else if (data.id_check == 2) {
                         $('#btn_good').show();
                     }
-                }
+                } else if (data.RST_CD == '-2') {
+                    location.href = [[@{/sinmungo/sinmungo_list.do}]];
 
-                else if(data.RST_CD == '-2') {
-                    location.href=[[@{/sinmungo/sinmungo_list.do}]];
                 }
             },
             error: function (request, status, error) {
@@ -183,8 +182,6 @@
             }
         });
     });
-
-    
 
 
     <!--투표하기버튼 클릭 -->
@@ -196,8 +193,43 @@
     <!-- 투표결과 버튼 클릭 -->
     $('#button_result').click(function () {
 
+        const URL = APIURL + '/user/opinion/Poll_resultView.ajax';
+
+        var data = new FormData();
+        data.append("opinion_no", [[${idx}]]);
+
+        $.ajax({
+            url: URL,
+            data: data,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+                //list 있음.
+                if (data.RST_CD == 0) {
+                    let arr_result ='';
+                    for(var i =0; i < data.result.length; i++) {
+                        arr_result += '<li class="win">';
+                        arr_result += '<span class="txt">'+data.result[i].poll_item_title+'</span>';
+                        arr_result += '<span class="result">';
+                        arr_result += '<strong>'+data.result[i].poll_item_count+'</strong>표';
+                        arr_result += '<span>('+data.result[i].percent+'%)</span></span>';
+                    }
 
 
+                    $('#result_voting').html(arr_result);     //투표 결과.
+
+                } else if (data.RST_CD == '-2') {
+
+                }
+
+            },
+            error: function (request, status, error) {
+                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        });
 
 
         $('#popup_result').show();
@@ -211,25 +243,25 @@
         let poll_text = $('#poll_text').val();
 
         //의견 30자 넘기지 말기
-        if(poll_text > 30) {
+        if (poll_text > 30) {
             alert('글자 수 초과');
             $('#poll_text').focus;  //text box 지정
             return;
-        } else if(VT_CNT == 0 && poll_text.length == 0) {
+        } else if (VT_CNT == 0 && poll_text.length == 0) {
             alert('주관식 입력 안 함');
             return;
         }
 
         var radionValue = $('input[name=poll]').val();
-        if(radionValue == null && VT_CNT > 0) {
+        if (radionValue == null && VT_CNT > 0) {
             alert('선택 안함');
             return;
-        } else if(VT_CNT < 0 ) {
+        } else if (VT_CNT < 0) {
             alert('error');
-            return ;
+            return;
         }
 
-        const URL = APIURL+"/user/opinion/poll_result_insert.ajax";
+        const URL = APIURL + "/user/opinion/poll_result_insert.ajax";
 
         //data 가져오기
         var data = new FormData();
@@ -241,18 +273,20 @@
         data.append('mobile_no', [[${session?.member?.mobile_no}]]);
 
         $.ajax({
-            url : URL,
-            data : data,
-            type : 'post',
+            url: URL,
+            data: data,
+            type: 'post',
             dataType: 'json',
             contentType: false,
             processData: false,
-            success : function(data) {
+            success: function (data) {
                 console.log(data);
 
+            },
+            error: function (request, status, error) {
+                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
             }
         });
-
 
 
         $('#popup_active').hide();  //popup창 닫기
