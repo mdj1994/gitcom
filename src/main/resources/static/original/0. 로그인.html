@@ -1,56 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+  <head>
     <title>KOSCA</title>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <link href="../css/default.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link href="../css/default.css" rel="stylesheet" type="text/css"> 
     <script src="../js/jquery.3.6.0.min.js"></script>
     <script src="../js/ui.js"></script>
-</head>
-<body class="login_body">
-<div class="login_wrap">
-    <div class="loginForm">
+  </head>
+  <body class="login_body"> 
+    <div class="login_wrap">
+      <div class="loginForm">
         <h1><span>KOSCA</span></h1>
         <h2>Log into your<br/>Account</h2>
         <p class="txt01">회원신문고는 회원사가 이용하는 서비스입니다.<br>회원사가 아닐시 사용이 제한됩니다.</p>
-        <div class="userid"><input type="text" placeholder="아이디 (휴대폰번호)  - 없이 입력"/></div>
-        <div class="userpwd"><input type="password" placeholder="Passwords"/></div>
+        <div class="userid"><input type="text" placeholder="아이디 (휴대폰번호)  - 없이 입력" /></div>
+        <div class="userpwd"><input type="password" placeholder="Passwords" /></div>
         <div class="btn_account">
-            <a href="#" class="btn01">회원가입하기</a>
-            <a href="#" class="btn02">비밀번호 재설정</a>
+          <a href="#" class="btn01">회원가입하기</a>
+          <a href="#" class="btn02">비밀번호 재설정</a>
         </div>
         <button class="btn_login">로그인</button>
         <address class="txt_address">
-            <div><strong>대한전문건설협회</strong>07071 서울특별시 동작구 보라매로5길 15, 18층 <br>TEL. 02.3284.1010 FAX. 02.3284.1044<br>webmaster@kosca.or.kr
-            </div>
-            <span class="cp">Copyright © 2022 KOSCA All right reserved.</span>
+          <div><strong>대한전문건설협회</strong>07071 서울특별시 동작구 보라매로5길 15, 18층 <br>TEL. 02.3284.1010  FAX. 02.3284.1044<br>webmaster@kosca.or.kr</div>
+          <span class="cp">Copyright © 2022 KOSCA All right reserved.</span>
         </address>
+      </div>
     </div>
-</div>
-<!-- s: popup -->
-<div class="popup_wrap">
-    <div class="msgPopup_wrap">
+    <!-- s: popup -->
+    <div class="popup_wrap">
+      <div class="msgPopup_wrap">
         <h2 class="pHeader">알림</h2>
         <div class="pBody">
-            <p class="msg01">아이디 혹은 비밀번호가 일치하지 않습니다.<br>확인 후, 다시 시도해주세요</p>
-            <button type="button" class="btn_type01">확인</button>
-        </div>
+          <p class="msg01">아이디 혹은 비밀번호가 일치하지 않습니다.<br>확인 후, 다시 시도해주세요</p>
+          <button type="button" class="btn_type01">확인</button>
+        </div> 
+      </div>
     </div>
-</div>
-<!-- e: popup -->
-<script type="text/javascript">
+    <!-- e: popup -->
+    <script type="text/javascript">
     <!--
-    $(".userid input").focus(function () {
+      $(".userid input").focus(function(){
         $(this).parent().addClass("on");
-    });
-    $(".userid input").blur(function () {
-        if ($(this).val().length < 1) {
-            $(this).parent().removeClass("on");
+      });
+      $(".userid input").blur(function(){
+        if($(this).val().length < 1){
+          $(this).parent().removeClass("on"); 
         }
-    });
+      });
     //-->
-</script>
-</body>
+    </script>
+  </body>
 </html>

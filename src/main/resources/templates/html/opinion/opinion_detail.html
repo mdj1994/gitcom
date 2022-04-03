@@ -13,12 +13,12 @@
                             id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span></h3>
                     <div class="writerNdate">
                         <span class="writer">작성자</span>
-                        <span class="name" id="note_nm">관리자</span>
+                        <span class="name"><span id="note_nm">관리자</span> <span id="branch_nm">(경기지부 | KICT)</span></span>
                         <span class="date" id="note_date">2022-03-31</span>
                     </div>
                     <div class="rcd">
                         <span class="tit">추천수</span>
-                        <strong class="no">9,999</strong>
+                        <strong class="no" id="comm_cnt">9,999</strong>
                     </div>
                 </div>
                 <div class="content">
@@ -160,6 +160,8 @@
                     $('.poll_title').text(result.topic);         //페이지 주제
                     $('#note_nm').html(result.member_nm);
                     $('#note_date').html(result.reg_date);
+                    $('#branch_nm').html('('+result.branch_nm+' | KICT)');  //지부 설정
+                    $('#comm_cnt').html(result.comm_cnt);     //추천수
 
                     console.log("count : "+data.result.board_count);
                     console.log("result : "+result.poll_from_date);

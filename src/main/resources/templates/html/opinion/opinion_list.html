@@ -29,7 +29,7 @@
                     </tr>
                     </thead>
                     <tbody id="body_list">
-                    <tr>
+                    <!--<tr>
                         <td class="no" scope="row">999</td>
                         <td class="title"><a href="#">2022년도 건설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업
                             고용·산재보설업 고용·산재보설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img src="../images/pc/ico_secret.png"
@@ -119,11 +119,11 @@
                         <td class="writer">홍길동 (경기지부 | KICT)</td>
                         <td class="date">2022-02-03</td>
                         <td class="state"><span class="done">완료</span></td>
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
                 <div class="pagingNbtn">
-                    <div class="btn_write"><a href="#"><span>글쓰기</span></a></div>
+<!--                    <div class="btn_write"><a href="#"><span>글쓰기</span></a></div>-->
                     <div class="paging">
                         <a href="#" class="front"></a>
                         <a href="#" class="prev"></a>
@@ -196,9 +196,10 @@
                         arr += '<td class="title" onclick="detail_move(' + list[i].opinion_no + ')">' + list[i].title;
 
                         arr += '</td>';
-                        arr += '<td class="write">' + list[i].member_nm + '</td>';
+                        arr += '<td class="writer">' + list[i].member_nm;
+                        arr += ' ('+list[i].branch_nm+' | KICT)</td>';
                         arr += '<td class="date">' + list[i].reg_date + '</td>';
-                        arr += '<td class="rcd"><span>' + 'no' + '</span>';
+                        arr += '<td class="rcd"><span>' + list[i].comm_cnt + '</span>';
                         arr += '</tr>';
                     }
 

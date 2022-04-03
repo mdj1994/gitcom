@@ -24,8 +24,9 @@
                                 </select>
                             </td>-->
                             <th class="psw">비밀번호</th>
-                            <td><input type="text" class="inputType" id="note_passwd" placeholder="비밀번호를 입력해주세요."
-                                       style="width: 180px;"></td>
+                            <td><label><input type="checkbox" id="ckbox"> <span id="checkcontent">비공개여부</span></label>
+                                <input type="text" class="inputType" id="note_passwd" placeholder="비밀번호를 입력해주세요."
+                                       style="width: 180px;display:none;"></td>
                         </tr>
                         <tr>
                             <th scope="row">*제목</th>
@@ -36,6 +37,15 @@
                             <th scope="row" class="content">*내용</th>
                             <td colspan="3"><textarea id='note_contents' placeholder="내용을 입력하세요.(3000자 이내)" rows="10"
                                                       cols="10"></textarea></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">첨부파일</th>
+                            <td colspan="3">
+                                <label class="fileEntry"><input type="file"><span>파일찾기</span></label>
+                                <div class="fileList">
+                                    <a href="#" class="file">[건설협회] 교육 운영자료.hwp</a><a href="#" class="btn_del">삭제</a>
+                                </div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -145,6 +155,23 @@
     //content 영역
     $('#p_content_close').click(function () {
         $('#popup_content').hide()
+    });
+
+
+    //비공개여부 checkbox
+    $('#ckbox').click(function() {
+
+        //on 할 경우
+        if($('#ckbox').is(':checked')) {
+            $('#checkcontent').hide();
+            $('#note_passwd').show();
+        }
+        //off 할 경우
+        else {
+            $('#checkcontent').show();
+            $('#note_passwd').val('');
+            $('#note_passwd').hide();
+        }
     });
 
 
