@@ -7,20 +7,20 @@
         <div class="body_inner">
             <div class="sub01_detail">
                 <div class="header">
-                    <h3 class="title"><span id="note_no">341</span>. <span
-                            id="note_title">공공기관 공모전의 투명한 운영을 위한 제안합니다.</span></h3>
+                    <h3 class="title"><span id="note_no"><!--341--></span>. <span
+                            id="note_title"><!--공공기관 공모전의 투명한 운영을 위한 제안합니다.--></span></h3>
                     <div class="writerNdate">
                         <span class="writer">작성자</span>
-                        <span class="name"><span id="note_nm">홍길동</span> <span id="branch_nm">(경기지부 | KICT)</span></span>
-                        <span class="date" id="note_date">2022-03-31</span>
+                        <span class="name"><span id="note_nm"><!--홍길동--></span> <span id="branch_nm">(경기지부 | KICT)</span></span>
+                        <span class="date" id="note_date"><!--2022-03-31--></span>
                     </div>
                     <div class="rcd">
                         <span class="tit">추천수</span>
-                        <strong class="no" id="board_count">9,999</strong>
+                        <strong class="no" id="board_count"><!--9,999--></strong>
                     </div>
                 </div>
                 <div class="content" id="note_contents">
-                    <ol>
+                    <!--<ol>
                         <li>1. 정부는 관계부처 합동으로 「건설현장 불법행위 TF」를 구성(’21.10월)하고 집중감독을 실시(’21.10월~12월)한 결과, 불법행위자의 체포·구속, 과태료
                             부과,
                             시정조치 등 현장 불법행위에 대해 엄정 조치를 취하였습니다.
@@ -33,7 +33,7 @@
                     <div class="add">
                         붙 임<a href="#"> 1. 건설현장 불법행위 정부 조치 사례 및 지침 1부.</a><br>
                         <a href="#">2. 「건설현장 채용질서 신고센터」 관련 자료 1부</a> 끝.
-                    </div>
+                    </div>-->
                 </div>
 
                 <div class="btn_wrap">
@@ -50,11 +50,11 @@
                 <!-- 댓글 영역 -->
                 <div class="comment_wrap">
                     <div class="commentEntry_wrap">
-                        <div class="count">댓글수 <strong id="comment_cnt">1,132</strong></div>
+                        <div class="count">댓글수 <strong id="comment_cnt"><!--1,132--></strong></div>
 
                         <!-- 댓글 글쓰기 -->
                         <div class="commentEntry" style="display: none;" id="div_comment_write">
-                            <strong class="name">홍길동</strong>
+                            <strong class="name" th:text="${session?.member?.member_nm}"></strong>
                             <textarea rows="20" cols="100" placeholder="100자 이내로 댓글을 작성해주세요."
                                       id="comment_contents"></textarea>
                             <button class="btn_entry" id="result_contents">등록</button>
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="commentList_wrap" id="content_list">
-                        <ul>
+                        <!--<ul>
                             <li>
                                 <div class="hd">
                                     <strong class="name">신사임당</strong>
@@ -99,7 +99,7 @@
                                     피해사례 발생시 국토부 내 「건설현장 채용질서 신고센터」를 적극 활용하고 현장 불법행위에 대응할 수 있도록 참고하여 주시기 바랍니다.
                                 </div>
                             </li>
-                        </ul>
+                        </ul>-->
                     </div>
                 </div>
             </div>
@@ -134,7 +134,7 @@
         passwd = [[${session?.last_passwd}]];
 
         //공백일 경우, url로 호출 한 경우.
-        if (passwd == null || passwd == '0') {
+        if (passwd == null) {
 
 
             /* 공개글 / 비공개글 유무 파악 */
@@ -221,6 +221,17 @@
                     $('#note_date').html(result.reg_date);
                     $('#branch_nm').html('('+result.branch_nm+' | KICT)');  //지부 설정
                     $('#board_count').html(result.board_count);     //추천수
+
+
+                    //사용자 추천 여부 확인하기
+                    //0 추천 안함.
+                    if(data.opinion_result == 0) {
+
+                    }
+                    //이미 추천한 기능
+                    else if(data.opinion_result != 0) {
+                        //사진이 없어서 따로 설정해두지 않았음.
+                    }
 
                     if (data.id_check == 1) {
                         $('#btn_update').show();
@@ -325,6 +336,45 @@
     $('#btn_update').click(function () {
 
         location.href = [[@{/jean/jean_update.do}]]+'?idx=' + [[${idx}]];
+
+    });
+
+
+    //추천하기
+    $('#btn_good').click(function() {
+        const URL = APIURL +'/user/recommendation/recommendation_write.ajax';
+
+        let data = new FormData();
+        data.append("pub_no", [[${idx}]]);
+
+        let id_check = [[${session?.member?.member_no}]];
+        if (id_check != null) {
+            data.append("member_id", [[${session?.member?.member_id}]]);
+            data.append("member_nm", [[${session?.member?.member_nm}]]);
+            data.append("mobile_no", [[${session?.member?.mobile_no}]]);
+        }
+
+        $.ajax({
+            url : URL,
+            data : data,
+            type : 'post',
+            dataType : 'json',
+            processData : false,
+            contentType : false,
+            success : function(data) {
+                console.log(data);
+                if(data.RST_CD == 0) {
+                    detail_show();
+                } else if(data.RST_CD == '-1'){
+                    alert('오류 발생');
+                } else if(data.RST_CD == '-2') {
+                    alert('이미 추천했음');
+                }
+            },
+            error: function (request, status, error) {
+                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        })
 
     });
 </script>
