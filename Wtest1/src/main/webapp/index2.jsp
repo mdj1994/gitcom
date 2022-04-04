@@ -3,7 +3,7 @@
 <html lang ="ko">
 <head>
 <meta charset="UTF-8">
-<title>JDBC_milk_CRUD</title>
+<title>Insert title here</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
