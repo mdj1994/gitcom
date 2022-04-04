@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>KOSCA</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link th:href="@{/css/default.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/jquery.3.6.0.min.js}"></script>
+    <script th:src="@{/js/ui.js}"></script>
+</head>
+<body class="login_body">
+<div class="login_wrap">
+    <div class="loginForm">
+        <h1><span>KOSCA</span></h1>
+        <h2>Log into your<br/>Account</h2>
+        <p class="txt01">회원신문고는 회원사가 이용하는 서비스입니다.<br>회원사가 아닐시 사용이 제한됩니다.</p>
+        <div class="userid"><input type="text" id="userid" placeholder="아이디 (사업자번호)  - 없이 입력"/></div>
+        <div class="userpwd"><input type="password" id="userpwd" placeholder="Passwords"/></div>
+        <div class="btn_account">
+            <a th:href="@{/member/membership01.do}" class="btn01">회원가입하기</a>
+            <a href="#" class="btn02">비밀번호 재설정</a>
+        </div>
+        <button class="btn_login" id="login_check">로그인</button>
+        <address class="txt_address">
+            <div><strong>대한전문건설협회</strong>07071 서울특별시 동작구 보라매로5길 15, 18층 <br>TEL. 02.3284.1010 FAX. 02.3284.1044<br>webmaster@kosca.or.kr
+            </div>
+            <span class="cp">Copyright © 2022 KOSCA All right reserved.</span>
+        </address>
+    </div>
+</div>
+
+
+<!-- 로그인 정보가 없을 경우 -->
+<!-- s: popup -->
+<div class="popup_wrap" style="display:none;" id="popup_false">
+    <div class="msgPopup_wrap">
+        <h2 class="pHeader">알림</h2>
+        <div class="pBody">
+            <p class="msg01">아이디 혹은 비밀번호가 일치하지 않습니다.<br>확인 후, 다시 시도해주세요</p>
+            <button type="button" class="btn_type01" id="popup_check">확인</button>
+        </div>
+    </div>
+</div>
+<!-- e: popup -->
+
+
+<script th:inline="javascript">
+
+
+    //로그인버튼 클릭
+    $('#login_check').click(function () {
+
+        //조회하기
+        let userid = $('#userid').val();
+        let userpwd = $('#userpwd').val();
+
+        //OS 구분하기
+        let userOS = navigator.userAgent.toLowerCase();
+        if (userOS.indexOf("android") > -1) {
+            userOS = 'A';
+        } else if (userOS.indexOf("iphone") > -1 || userOS.indexOf("ipad") > -1 || userOS.indexOf("ipod") > -1) {
+            userOS = "I";
+        } else {
+            userOS = "etc";
+        }
+
+
+        //data 넣기
+        let data = new FormData();
+        data.append("member_id", userid);
+        data.append("passwd", userpwd);
+        data.append("os_type", userOS);
+
+
+        const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+        const URL = WEBURL + '/member/loginAction.do';
+
+        $.ajax({
+            url: URL,
+            data: data,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+                if (data == 0) {
+
+                    location.href = [[@{/main/main.do
+                }]]
+                    ;
+
+                }
+                //data 없음
+                else if (data == '-2') {
+                    $('#popup_false').show();
+                }
+                //기타 error
+                else {
+                    console.log('error');
+                }
+            },
+            error: function (request, status, error) {
+                alert("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        });
+    });
+
+
+    // id부분 마우스 커서시
+    $(".userid input").focus(function () {
+        $(this).parent().addClass("on");
+
+    });
+
+    // id부분 입력 없을 경우
+    $(".userid input").blur(function () {
+        if ($(this).val().length < 1) {
+            $(this).parent().removeClass("on");
+        }
+    });
+
+    // pw부분 마우스 커서시
+    $(".userpwd input").focus(function () {
+        $(this).parent().addClass("on");
+
+    });
+
+    // pw부분 입력 없을 경우
+    $(".userpwd input").blur(function () {
+        if ($(this).val().length < 1) {
+            $(this).parent().removeClass("on");
+        }
+    });
+
+    <!-- 확인버튼 누를경우 popup 없애기 -->
+    $('#popup_check').click(function () {
+        $('.popup_wrap').css('display', 'none');
+    });
+
+
+</script>
+</body>
+</html>

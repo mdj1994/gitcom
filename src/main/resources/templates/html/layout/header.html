@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<header id="header_container" th:fragment="headerFragment">
+
+
+    <div class="inner">
+        <div class="header_top">
+            <h1><a th:href="@{/main/main.do}">대한전문건설협회</a></h1>
+
+            <!-- session on -->
+            <th:block th:if="${session.login}">
+            <div class="rtl">
+                <span class="txt_account"><span>반갑습니다.</span><strong
+                        th:text="'경기북부 '+${session.member.member_nm}"></strong>님</span>
+                <a href="#" class="btn_alarm new">알림<span>9</span></a>
+                <a th:href="@{/main/logout.do}" class="btn_out"><span>로그아웃</span></a>
+            </div>
+            </th:block>
+
+            <!-- session off -->
+            <th:block th:unless="${session.login}">
+                <a th:href="@{/main/login.do}" class="btn_login">로그인이 필요합니다.</a>
+            </th:block>
+
+
+        </div>
+        <div class="header_btm">
+            <h2 class="mainTitle">회원 신문고</h2>
+            <nav class="gnb" th:if="${nav!='member'}">
+                <ul>
+                    <li class="gnb01"><a th:classappend="${nav} == 'sinmungo' ? 'on'" th:href="@{/sinmungo/sinmungo_list.do}"><span>신문고</span></a></li>
+                    <li class="gnb02"><a th:classappend="${nav} == 'jean' ? 'on'" th:href="@{/jean/jean_list.do}"><span>회원제안</span></a></li>
+                    <li class="gnb03"><a th:classappend="${nav} == 'opinion' ? 'on'" th:href="@{/opinion/opinion_list.do}"><span>의견청취</span></a></li>
+                    <li class="gnb04"><a th:classappend="${nav} == 'announcement' ? 'on'" th:href="@{/announcement/announcement_list.do}"><span>공지사항</span></a></li>
+                </ul>
+            </nav>
+            <th:block th:unless="${nav=='member' || nav=='main'}">
+            <a href="#" class="btn_search m">검색</a>
+            <div class="search_wrap">
+            <span>
+              <input type="text" placeholder="검색어 입력">
+              <button>검색</button>
+            </span>
+            </div>
+            </th:block>
+        </div>
+    </div>
+
+</header>
+</html>

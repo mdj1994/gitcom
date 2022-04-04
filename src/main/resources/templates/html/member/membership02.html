@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+<th:block layout:fragment="contentFragment">
+    <div id="body_container">
+        <div class="body_inner">
+            <div class="subHeader">
+                <h3 class="subTitle">회원가입</h3>
+                <a href="#" class="btn_back">이전</a>
+            </div>
+            <div class="certify_wrap">
+                <h4 class="subTitle02">본인인증</h4>
+                <p class="txt_info">정보 확인 후, 인증 절차를 진행하세요.</p>
+                <div class="certifyForm">
+                    <div class="nameArea">
+                        <label for="name">회원명</label>
+                        <div class="box">
+                            <input type="text" id="name" placeholder="홍길동" disabled
+                                   th:value="${result.getMember_nm()}"/>
+                        </div>
+                    </div>
+                    <div class="phoneArea">
+                        <label for="phoneNo">휴대번호</label>
+                        <div class="box">
+                            <input type="tel" id="phoneNo" placeholder="010-1234-5678" disabled
+                                   th:value="${result.getMobile_no()}"/>
+                            <button class="btn_sendNo" id="btn_snsSend">인증번호발송</button>
+                        </div>
+                    </div>
+                    <div class="certifyNo">
+                        <label for="certifyNo">인증번호<br>입력</label>
+                        <div class="box">
+                            <input type="text" id="certifyNo" placeholder="인증번호를 입력하세요"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_center">
+                    <button class="btn_certify" id="result_check">인증하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- s: 인증번호 발송 클릭 안함 -->
+    <div class="popup_wrap" style="display:none;" id="popup_sns">
+        <div class="msgPopup_wrap">
+            <h2 class="pHeader">알림</h2>
+            <div class="pBody">
+                <p class="msg01">인증번호를 먼저 입력해주세요.</p>
+                <button type="button" class="btn_type01" id="popup_close">닫기</button>
+            </div>
+        </div>
+    </div>
+    <!-- e: popup -->
+
+    <!-- s: 인증번호 실패 -->
+    <div class="popup_wrap" style="display:none;" id="popup_div">
+        <div class="msgPopup_wrap">
+            <h2 class="pHeader">알림</h2>
+            <div class="pBody">
+                <p class="msg01">인증 정보가 존재하지 않습니다.<br>확인 후, 다시 시도해주세요.</p>
+                <button type="button" class="btn_type01" id="retry">다시시도</button>
+            </div>
+        </div>
+    </div>
+    <!-- e: popup -->
+
+</th:block>
+<script layout:fragment="javascript" th:inline="javascript">
+
+    let snsCheck = 'n';
+    let member_id = [[${result.getMember_id()}]];   // 사용자 id 가져오기
+    let phoneNo = [[${result.getMobile_no()}]];  //전화번호 정보 가져오기
+    let user_nm = [[${result.getMember_nm()}]];   //사용자 정보 가져오기
+    let randomNum = '';             //인증번호 발송 누를 시, 인증번호가 생성된다.
+
+    //$('#result_check').attr('disabled', true);  //시작시 인증하기 버튼 disabled 처리
+
+    //인증번호 발송
+    $('#btn_snsSend').click(function () {
+        //$('#result_check').removeAttr('disabled');  //인증하기 버튼 disabled 처리 해제
+
+
+        /* 랜덤 숫자 만들기*/
+        randomNum = Math.floor((Math.random() * 900000) + 100000);
+
+
+        let data = new FormData();
+        data.append("mobile_no", phoneNo);
+        data.append("member_nm", user_nm);
+        data.append("certifyNo", randomNum);
+
+        const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+        const URL = APIURL + '/user/member/snsSend.ajax';
+
+        $.ajax({
+            url: URL,
+            data: data,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.RST_CD == 0) {
+                    snsCheck = 'y'; //인증번호 발송 클릭
+                    console.log(data);
+                } else {
+                    $('#popup_div').show();
+                }
+            },
+            error: function (request, status, error) {
+                alert("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        });
+
+    });
+
+    //인증하기 클릭
+    $('#result_check').click(function () {
+
+        let certifyNo = $('#certifyNo').val();
+
+        //인증번호 발송 클릭 안 했을 경우
+        if (snsCheck != 'y') {
+            $('#popup_sns').show();
+            return;
+        }
+
+        //인증번호 일치여부 확인
+        else if (!(certifyNo == randomNum)) {
+            $('#popup_div').show();
+            return;
+        }
+
+
+        //다음페이지 이동
+        const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+        location.href = WEBURL + '/member/membership03.do?mobile_no=' + phoneNo + '&member_nm=' + user_nm + '&member_id=' + member_id;
+
+
+    });
+
+    //popup 닫기01
+    $('#retry').click(function () {
+        $('#popup_div').hide();
+    });
+
+    //popup 닫기02
+    $('#popup_close').click(function () {
+        $('#popup_sns').hide();
+    });
+
+</script>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+<th:block layout:fragment="contentFragment">
+    <div id="body_container">
+        <div class="body_inner">
+            <div class="subHeader">
+                <h3 class="subTitle">회원가입</h3>
+                <a href="#" class="btn_back">이전</a>
+            </div>
+            <div class="join_wrap">
+                <h4 class="subTitle02">개인정보 입력</h4>
+                <p class="txt_info">
+                    회원 가입을 위해 회원사 확인 절차가 필요합니다.<br>
+                    이름(실명)과 휴대폰 번호를 입력하세요.
+                </p>
+                <div class="joinForm">
+                    <div style="float: left; width: 70%; height: 85px;">
+                        <label for="member_id" style="display: inline-block; width: 108px; height: 63px; text-align: center; vertical-align: top; border-left: 1px solid #e7e7e9; border-right: 1px solid #e7e7e9; font-size: 13px; background: #fafafa;font-weight:500;">사업자 번호</label>
+                        <div style="display:inline-block;">
+                            <input type="text" id="member_id" style="width: 362px; height: 41px; line-height: 41px; padding: 0 0 0 15px; vertical-align: 1px; border: 1px solid #d7d8dc; border-radius: 4px; font-size: 14px;" placeholder="- 없이, 사업자 번호를 입력해주세요."/>
+                        </div>
+                    </div>
+                </div>
+                <div class="joinForm">
+                    <div class="nameArea">
+                        <label for="name">이름</label>
+                        <div class="box">
+                            <input type="text" id="name" placeholder="반드시 실명으로 입력하세요."/>
+                        </div>
+                    </div>
+                    <div class="phoneArea">
+                        <label for="phoneNo">휴대번호</label>
+                        <div class="box">
+                            <select class="" id="firstNo">
+                                <!--                          <option>선택</option>-->
+                                <option value="010">010</option>
+                            </select>
+                            <input type="tel" placeholder="- 없이 입력하세요" id="phoneNo"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_center">
+                    <button class="btn_joinCheck" id="button_active">회원조회</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 건설협회 데이터 확인-->
+    <!-- s: popup -->
+    <div class="popup_wrap" style="display:none;" id="popup_div">
+        <div class="msgPopup_wrap">
+            <h2 class="pHeader">알림</h2>
+            <div class="pBody">
+                <p class="msg01">정보가 존재하지 않습니다.<br>확인 후, 다시 시도해주세요.</p>
+                <button type="button" class="btn_type01" id="retry">다시시도</button>
+            </div>
+        </div>
+    </div>
+    <!-- e: popup -->
+
+
+    <!-- 이미 있는 회원 -->
+    <!-- s: popup -->
+    <div class="popup_wrap" style="display:none;" id="popup_over">
+        <div class="msgPopup_wrap">
+            <h2 class="pHeader">알림</h2>
+            <div class="pBody">
+                <p class="msg01">이미 있는 회원정보 입니다.</p>
+                <button type="button" class="btn_type01" id="retry02">다시시도</button>
+            </div>
+        </div>
+    </div>
+    <!-- e: popup -->
+
+    <script layout:fragment="javascript" th:inline="javascript">
+
+        //회원 조회 클릭
+        $('#button_active').click(function () {
+
+            //유효성 검사
+            if ($('#name').val() === '' || $('#phoneNo').val() === '') {
+                $('#popup_div').css('display', 'flex');
+            } else {
+
+                var pattern_num = /^[0-9]*$/;
+
+                //조회하기
+                let member_id = $('#member_id').val();      //사업자 번호
+                let usernm = $('#name').val();
+                let firstNo = $('#firstNo').val();          //select box 번호 가져오기
+                let phoneNo = firstNo + $('#phoneNo').val();  //사용자 입력번호 가져오기
+
+
+                member_id.replace(/-/g, '');        // - 제거
+                member_id.trim();                   // 띄어쓰기 제거
+
+                phoneNo.replace(/-/g, '');    // 전화번호 사이 '-'입력시 삭제
+                phoneNo.trim(); //띄어쓰기 제거
+                if (!pattern_num.test(phoneNo)) {
+
+                    alert('숫자만 입력해주세요.');
+                    $('#phoneNo').focus();
+
+                    return;
+                }
+                if (!pattern_num.test(member_id)) {
+
+                    alert('숫자만 입력해주세요.');
+                    $('#phoneNo').focus();
+
+                    return;
+                }
+
+                const APIURL = [[${@environment.getProperty('API_SERVER')}]];   //properties에 저장 된 API URL 불러오기
+                const URL = APIURL + '/user/member/membership01findByPhone.ajax';
+
+                var data = new FormData;
+                data.append('member_id', member_id);
+                data.append('mobile_no', phoneNo);
+                data.append("member_nm", usernm);
+
+                console.log(URL);
+                $.ajax({
+                    url: URL,
+                    data: data,
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        console.log(data);
+                        //성공적으로 완료 되었을 경우
+                        if (data.RST_CD == 0) {
+                            if (data.result == 'Y') {
+                                location.href = '/member/membership02.do?mobile_no=' + phoneNo + '&member_nm=' + usernm + '&member_id=' + member_id;   //
+                            } else if (data.RST_CD == '-2') {
+                                $('#popup_over').show();
+                            } else {
+                                $('#popup_div').css('display', 'flex');  //pop창 생성
+                            }
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+                    }
+                });
+            } //유효성 검사 완료
+
+        }); //회원정보 조회 완료
+
+        <!-- popup 닫기 01 -->
+        $('#retry').click(function () {
+            $('#popup_div').css('display', 'none');
+        })
+
+        <!-- popup 닫기 02 -->
+        $('#retry02').click(function () {
+            $('#popup_over').hide();
+        })
+    </script>
+</th:block>
+</html>

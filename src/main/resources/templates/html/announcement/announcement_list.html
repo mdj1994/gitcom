@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+
+<th:block layout:fragment="contentFragment">
+    <div id="body_container">
+        <div class="body_inner">
+            <div class="subHeader m">
+                <h3 class="subTitle">공지사항</h3>
+                <a href="#" class="btn_back">이전</a>
+            </div>
+            <div class="sub01_tblList">
+                <table>
+                    <colgroup>
+                        <col style="width: 10%">
+                        <col>
+                        <col style="width: 15%">
+                        <col style="width: 10%">
+<!--                        <col style="width: 5%">-->
+                        <col style="width: 10%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">작성일</th>
+                        <!--<th scope="col">참여</th>-->
+                        <th scope="col">추천</th>
+                    </tr>
+                    </thead>
+                    <tbody id="body_list">
+                    <!--<tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업 고용·산재보설업
+                            고용·산재보설업 고용·산재보설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img src="../images/pc/ico_secret.png"
+                                                                               class="ico_secret" alt="비밀글"></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img
+                                src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img
+                                src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+&lt;!&ndash;                        <td class="state"><span class="wait">452</span></td>&ndash;&gt;
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+&lt;!&ndash;                        <td class="state"><span class="done">469</span></td>&ndash;&gt;
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img
+                                src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+&lt;!&ndash;                        <td class="state"><span class="wait">512</span></td>&ndash;&gt;
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+&lt;!&ndash;                        <td class="state"><span class="done">525</span></td>&ndash;&gt;
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img
+                                src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+&lt;!&ndash;                        <td class="state"><span class="wait">688</span></td>&ndash;&gt;
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+&lt;!&ndash;                        <td class="state"><span class="done">721</span></td>&ndash;&gt;
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업 고용·산재보험료 신고·납부 및 실무교 납부</a> <img
+                                src="../images/pc/ico_secret.png" class="ico_secret" alt="비밀글"></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+&lt;!&ndash;                        <td class="state"><span class="wait">764</span></td>&ndash;&gt;
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>
+                    <tr>
+                        <td class="no" scope="row">999</td>
+                        <td class="title"><a href="#">2022년도 건설업건설업건설업 고용·산재보험료 신고·납부 및 실무교 납부</a></td>
+                        <td class="writer">홍길동 (경기지부 | KICT)</td>
+                        <td class="date">2022-02-03</td>
+&lt;!&ndash;                        <td class="state"><span class="done">851</span></td>&ndash;&gt;
+                        <td class="rcd"><span>9,999</span></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+                <div class="pagingNbtn">
+                    <div class="paging">
+                        <a href="#" class="front"></a>
+                        <a href="#" class="prev"></a>
+                        <a href="#" class="on">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#" class="next"></a>
+                        <a href="#" class="end"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<script layout:fragment="javascript" th:inline="javascript">
+
+    const APIURL = [[${@environment.getProperty('API_SERVER')}]];
+    const WEBURL = [[${@environment.getProperty('WEB_SERVER')}]];
+
+    $(document).ready(function() {
+
+        selectList('1');
+
+    });
+
+    <!-- List 불러오기 -->
+    function selectList(num) {
+        const URL = APIURL + '/user/announcement/announcement_list.ajax';
+
+        let data = new FormData();
+
+        $.ajax({
+            url: URL,
+            data: data,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+                if (data.RST_CD == '0') {
+
+
+                    let arr = '';
+                    let list = data.result;
+                    for (var i = 0; i < list.length; i++) {
+                        arr += '<tr>';
+                        arr += '<td class="no" scope="row">' + list[i].announcement_no + '</td>';
+                        arr += '<td class="title" onclick="detail_move(' + list[i].announcement_no + ')">' + list[i].title;
+
+                        arr += '</td>';
+                        arr += '<td class="writer">' + list[i].member_nm;
+                        arr += ' ('+list[i].branch_nm+' | KICT)</td>';
+                        arr += '<td class="date">' + list[i].reg_date + '</td>';
+                        arr += '<td class="rcd"><span>' + list[i].board_count + '</span>';
+                        arr += '</tr>';
+                    }
+
+                    $('#body_list').html(arr);
+
+                }
+
+            },
+            error: function (request, status, error) {
+                $('#popup_div').show();
+                console.log("code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + error);
+            }
+        });
+    }
+
+    <!-- detail 이동 -->
+    function detail_move(num) {
+
+        location.href = [[@{/announcement/announcement_detail.do}]]+'?idx='+num;
+    }
+</script>
+</html>
